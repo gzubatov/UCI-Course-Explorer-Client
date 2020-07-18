@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+:root {
+	--UCI-BLUE: #0064a4;
+}
+/* HeaderNav */
+.__header-nav {
+	background-color: var(--UCI-BLUE);
+}
