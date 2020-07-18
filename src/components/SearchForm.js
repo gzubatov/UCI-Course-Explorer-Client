@@ -20,7 +20,7 @@ const SearchForm = () => {
 	return (
 		<div className="w-full max-w-xl">
 			<form
-				className="bg-white shadow-md rounded px-8 pt-6 pb-4 mb-4"
+				className="bg-white  rounded px-8 pt-6 pb-4 mb-4"
 				onSubmit={formHandler}
 			>
 				<div className="flex flex-wrap -mx-3 mb-6">

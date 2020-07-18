@@ -1,16 +1,20 @@
 import React from 'react';
 
+import { BrowserRouter, Route } from 'react-router-dom';
+
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
 
 const App = () => {
 	return (
-		<div>
+		<BrowserRouter>
 			<HeaderNav />
-			<div className="flex justify-center">
-				<SearchForm />
-			</div>
-		</div>
+			<Route path="/" exact>
+				<div className="flex justify-center">
+					<SearchForm />
+				</div>
+			</Route>
+		</BrowserRouter>
 	);
 };
 
