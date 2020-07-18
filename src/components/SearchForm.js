@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Input from './FormElements/Input';
 
@@ -11,10 +12,20 @@ const OPTIONS = [
 const SearchForm = () => {
 	const [ department, setDepartment ] = useState();
 	const [ course, setCourse ] = useState();
+	const [ isTouched, setIsTouched ] = useState(false);
+	const history = useHistory();
 
 	const formHandler = (e) => {
 		e.preventDefault();
-		console.log(department, course);
+		if (department && course) {
+			history.push(`/${department.value}/${course}`);
+		}
+		else if (department) {
+			history.push(`/${department.value}`);
+		}
+		else {
+			setIsTouched(true);
+		}
 	};
 
 	return (
@@ -31,6 +42,7 @@ const SearchForm = () => {
 							label="Departments"
 							options={OPTIONS}
 							onInput={setDepartment}
+							onFocus={() => setIsTouched(true)}
 						/>
 					</div>
 					<div className="w-full md:w-1/4 px-3">
@@ -52,6 +64,12 @@ const SearchForm = () => {
 						</button>
 					</div>
 				</div>
+				{!department &&
+				isTouched && (
+					<h1 className="text-red-600 font-bold">
+						Please choose a department!
+					</h1>
+				)}
 			</form>
 		</div>
 	);

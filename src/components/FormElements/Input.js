@@ -30,6 +30,7 @@ const Input = (props) => {
 					defaultValue={props.defaultValue}
 					onChange={selectChangeHandler}
 					value={value}
+					onFocus={props.onFocus}
 				/>
 			);
 			break;
@@ -40,6 +41,7 @@ const Input = (props) => {
 					id={props.id}
 					onChange={inputChangeHandler}
 					className={`${props.classes}`}
+					onFocus={props.onFocus}
 				/>
 			);
 			break;
@@ -50,6 +52,7 @@ const Input = (props) => {
 					id={props.id}
 					onChange={inputChangeHandler}
 					className={`${props.classes}`}
+					onFocus={props.onFocus}
 				/>
 			);
 			break;
