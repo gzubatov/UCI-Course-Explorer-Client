@@ -1,4 +1,10 @@
 .header-nav {
-	margin: 0;
-	background-color: blue;
+	background-color: var(--UCI-BLUE);
+	height: 72px;
+}
+
+.header-nav span {
+	font-size: 2rem;
+	color: white;
+	font-weight: bold;
 }
