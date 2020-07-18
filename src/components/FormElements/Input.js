@@ -39,6 +39,7 @@ const Input = (props) => {
 					type="textarea"
 					id={props.id}
 					onChange={inputChangeHandler}
+					className={`${props.classes}`}
 				/>
 			);
 			break;
@@ -48,16 +49,22 @@ const Input = (props) => {
 					type="text"
 					id={props.id}
 					onChange={inputChangeHandler}
+					className={`${props.classes}`}
 				/>
 			);
 			break;
 	}
 
 	return (
-		<div>
-			<label htmlFor={props.id}>{props.label}</label>
+		<React.Fragment>
+			<label
+				className="block text-gray-700 text-sm font-bold mb-2"
+				htmlFor={props.id}
+			>
+				{props.label}
+			</label>
 			{element}
-		</div>
+		</React.Fragment>
 	);
 };
 

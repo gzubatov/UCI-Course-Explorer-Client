@@ -7,8 +7,9 @@ const App = () => {
 	return (
 		<div>
 			<HeaderNav />
-			<h1 className="text-3xl">App</h1>
-			<SearchForm />
+			<div className="flex justify-center">
+				<SearchForm />
+			</div>
 		</div>
 	);
 };
