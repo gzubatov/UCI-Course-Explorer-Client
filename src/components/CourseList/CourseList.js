@@ -5,27 +5,39 @@ import CourseListItem from './CourseListItem';
 
 const COURSES = [
 	{
-		department       : 'compsci',
+		department       : 'COMPSCI',
 		course           : 121,
-		professor        : 'Martins',
+		professor        : 'Martins, Alberto',
 		difficultyRating : 2.7
 	},
 	{
-		department       : 'compsci',
+		department       : 'COMPSCI',
 		course           : '122B',
-		professor        : 'Klefstad',
-		difficultyRating : 2.7
+		professor        : 'Klefstad, Raymond',
+		difficultyRating : 2.0
 	},
 	{
 		department       : 'ISC',
 		course           : 45,
-		professor        : 'Thornton',
+		professor        : 'Thornton, Alex',
+		difficultyRating : 3.7
+	},
+	{
+		department       : 'INF',
+		course           : 121,
+		professor        : 'Van Der Hoek, Andre',
 		difficultyRating : 2.7
 	},
 	{
-		department       : 'inf',
+		department       : 'COMPSCI',
+		course           : 45,
+		professor        : 'Thornton, Alex',
+		difficultyRating : 3.7
+	},
+	{
+		department       : 'COMPSCI',
 		course           : 121,
-		professor        : 'Van Der Hoek',
+		professor        : 'Van Der Hoek, Andre',
 		difficultyRating : 2.7
 	}
 ];
@@ -69,9 +81,13 @@ const CourseList = (props) => {
 	}
 
 	return (
-		<div>
-			<h1>Course Items: </h1>
-			{courses}
+		<div className="w-1/2">
+			<div className="flex mb-2 text-center font-bold">
+				<div className="w-2/5 text-left">Course</div>
+				<div className="w-2/5 text-left">Professor</div>
+				<div className="w-1/5 text-right">Difficulty Rating</div>
+			</div>
+			<div className="container w-full">{courses}</div>
 		</div>
 	);
 };

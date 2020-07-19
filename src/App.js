@@ -10,7 +10,7 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<HeaderNav />
-			<Route path="/" exact>
+			<Route path="/">
 				<div className="flex justify-center">
 					<SearchForm />
 				</div>
