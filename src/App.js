@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
+import CourseList from './components/CourseList/CourseList';
 
 const App = () => {
 	return (
@@ -16,12 +17,12 @@ const App = () => {
 			</Route>
 			<Route path="/:department" exact>
 				<div className="flex justify-center">
-					<h1>{`Hello from just department`}</h1>
+					<CourseList />
 				</div>
 			</Route>
 			<Route path="/:department/:course" exact>
 				<div className="flex justify-center">
-					<h1>{`Hello from department and course`}</h1>
+					<CourseList />
 				</div>
 			</Route>
 		</BrowserRouter>
