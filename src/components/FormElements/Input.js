@@ -31,6 +31,7 @@ const Input = (props) => {
 					onChange={selectChangeHandler}
 					value={value}
 					onFocus={props.onFocus}
+					onBlur={props.onBlur}
 				/>
 			);
 			break;

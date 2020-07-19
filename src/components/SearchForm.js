@@ -13,6 +13,7 @@ const SearchForm = () => {
 	const [ department, setDepartment ] = useState();
 	const [ course, setCourse ] = useState();
 	const [ isTouched, setIsTouched ] = useState(false);
+	const [ isFocused, setIsFocused ] = useState(false);
 	const history = useHistory();
 
 	const formHandler = (e) => {
@@ -25,6 +26,7 @@ const SearchForm = () => {
 		}
 		else {
 			setIsTouched(true);
+			setIsFocused(true);
 		}
 	};
 
@@ -43,6 +45,7 @@ const SearchForm = () => {
 							options={OPTIONS}
 							onInput={setDepartment}
 							onFocus={() => setIsTouched(true)}
+							onBlur={() => setIsFocused(true)}
 						/>
 					</div>
 					<div className="w-full md:w-1/4 px-3">
@@ -65,10 +68,18 @@ const SearchForm = () => {
 					</div>
 				</div>
 				{!department &&
-				isTouched && (
-					<h1 className="text-red-600 font-bold">
-						Please choose a department!
-					</h1>
+				isTouched &&
+				isFocused && (
+					<div
+						class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+						role="alert"
+					>
+						<p class="font-bold">Please Select A Department!</p>
+						<p>
+							At minimum you must select a department to conduct a
+							search.
+						</p>
+					</div>
 				)}
 			</form>
 		</div>
