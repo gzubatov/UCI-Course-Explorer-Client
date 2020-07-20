@@ -18,7 +18,7 @@ const App = () => {
 					</div>
 				</Route>
 				<Route path="/course/:cid">
-					<div className="flex justify-center">
+					<div className="flex">
 						<CoursePage />
 					</div>
 				</Route>
