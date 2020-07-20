@@ -9,7 +9,7 @@ const CourseListItem = (props) => {
 	else border_color = 'green';
 
 	return (
-		<Link to="/" className="flex-1">
+		<Link to={`/course/${props.id}`} className="flex-1">
 			<div
 				className={`flex items-center mb-2 rounded overflow-hidden shadow-lg border-2 border-${border_color}-600`}
 			>

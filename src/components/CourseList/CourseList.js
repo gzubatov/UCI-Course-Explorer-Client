@@ -35,6 +35,7 @@ const CourseList = (props) => {
 		return (
 			<CourseListItem
 				key={index}
+				id={course.id}
 				department={course.department}
 				course={course.course}
 				professor={course.professor}

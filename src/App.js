@@ -1,30 +1,44 @@
 import React from 'react';
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
 import CourseSearch from './components/CourseList/CourseSearch';
+import CoursePage from './components/Courses/CoursePage';
 
 const App = () => {
 	return (
 		<BrowserRouter>
 			<HeaderNav />
-			<Route path="/">
-				<div className="flex justify-center">
-					<SearchForm />
-				</div>
-			</Route>
-			<Route path="/:department" exact>
-				<div className="flex justify-center">
-					<CourseSearch />
-				</div>
-			</Route>
-			<Route path="/:department/:course" exact>
-				<div className="flex justify-center">
-					<CourseSearch />
-				</div>
-			</Route>
+			<Switch>
+				<Route path="/" exact>
+					<div className="flex justify-center">
+						<SearchForm />
+					</div>
+				</Route>
+				<Route path="/course/:cid">
+					<div className="flex justify-center">
+						<CoursePage />
+					</div>
+				</Route>
+				<Route path="/:department" exact>
+					<div className="flex justify-center">
+						<SearchForm />
+					</div>
+					<div className="flex justify-center">
+						<CourseSearch />
+					</div>
+				</Route>
+				<Route path="/:department/:course" exact>
+					<div className="flex justify-center">
+						<SearchForm />
+					</div>
+					<div className="flex justify-center">
+						<CourseSearch />
+					</div>
+				</Route>
+			</Switch>
 		</BrowserRouter>
 	);
 };

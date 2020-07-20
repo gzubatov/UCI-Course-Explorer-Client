@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import CourseList from './CourseList';
+import CourseInfo from './CourseInfo';
 
 const COURSES = [
 	{
@@ -47,40 +47,32 @@ const COURSES = [
 		difficultyRating : 2.7
 	}
 ];
-
-const CourseSearch = () => {
-	const { department, course } = useParams();
-	const [ loadedCourses, setLoadedCourses ] = useState();
+const CoursePage = () => {
+	const [ course, setCourse ] = useState(null);
+	const { courseId } = useParams().cid;
 
 	useEffect(
 		() => {
-			let courses;
-			if (!course) {
-				courses = COURSES.filter(
-					(course) => course.department.toLowerCase() === department
-				);
-			}
-			else {
-				courses = COURSES.filter((c) => {
-					return (
-						c.department.toLowerCase() ===
-							department.toLowerCase() &&
-						c.course.toString().toLowerCase() ===
-							course.toLowerCase()
-					);
-				});
-			}
-			setLoadedCourses(courses);
+			const filteredCourse = COURSES.filter(
+				(course) => course.id === courseId
+			);
+			setCourse(filteredCourse);
 		},
-		[ department, course ]
+		[ course, courseId ]
 	);
 
 	return (
 		<React.Fragment>
-			{!loadedCourses && <h1>Loading...</h1>}
-			{loadedCourses && <CourseList courses={loadedCourses} />}
+			{!course && <h1>Loading...</h1>}
+			{course && (
+				<CourseInfo
+					department={course.department}
+					course={course.course}
+					courseTitle="Lorem Ipsum"
+				/>
+			)}
 		</React.Fragment>
 	);
 };
 
-export default CourseSearch;
+export default CoursePage;
