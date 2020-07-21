@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import CourseInfo from './CourseInfo';
 import CourseDataChart from './CourseDataChart';
+import Reviews from '../Reviews/Reviews';
 
 const COURSES = [
 	{
@@ -17,7 +18,43 @@ const COURSES = [
 		prereqs          :
 			'I&C SCI 6D and (MATH 3A or I&C SCI 6N) and MATH 2B and (I&C SCI 46 or CSE 46) and (COMPSCI 112 or COMPSCI 116 or COMPSCI 171 or COMPSCI 178). I&C SCI 6D with a grade of C or better. MATH 3A with a grade of C or better. I&C SCI 6N with a grade of C or better. MATH 2B with a grade of C or better. I&C SCI 46 with a grade of C or better. CSE 46 with a grade of C or better',
 		groupWork        : 'Optional',
-		difficulty       : [ 7, 7, 18, 31, 34 ]
+		difficulty       : [ 7, 7, 18, 31, 34 ],
+		workload         : [ 4, 19, 25, 49 ],
+		reviews          : [
+			{
+				review    :
+					'I found the book "Python Crash Course" very helpful. I read the sections reviewing the topics that were being covered on Canvas for that week.',
+				quarter   : 'Fall',
+				year      : 2018,
+				date      : 'July 2020',
+				grade     : 'A-',
+				recommend : true
+			},
+			{
+				review    :
+					"Very easy class if you're familiar with coding already. If not, it's a gentle and fair introduction, and should still not take up much of your time. The concepts are explained quite well and you are given plenty of exercises to work through to solidify those concepts.",
+				quarter   : 'Fall',
+				year      : 2018,
+				date      : 'July 2020',
+				grade     : 'A-',
+				recommend : false
+			},
+			{
+				review  :
+					"I went into this class with no prior CS experience, and it was my first class at UCI. If I could do it differently, I would have taken it at a comm. college to save money (you can transfer up to 12 credits). I thought the class was very easy in the beginning, and then difficulty just ramped up towards the end. Other students have commented before that it really depends on the TA you get, and I completely agree. I had a TA who docked me for tiny formatting things, largely based on preference. When we worked in a group, other students in this class shared that this wasn't their experience at all (confirming that difficulty depends partially on TA). However, because it was my first class, I felt like I learned a lot. ",
+				quarter : 'Fall',
+				year    : 2018,
+				date    : 'July 2020',
+				grade   : 'A-'
+			},
+			{
+				review  :
+					'I found the book "Python Crash Course" very helpful. I read the sections reviewing the topics that were being covered on Canvas for that week.',
+				quarter : 'Fall',
+				year    : 2018,
+				date    : 'July 2020'
+			}
+		]
 	},
 	{
 		id               : 2,
@@ -80,7 +117,7 @@ const CoursePage = () => {
 				<div>
 					<CourseInfo course={course} />
 					<div className="flex flex-wrap">
-						<div className="w-1/2 sm:w-full md:w-full lg:w-1/2 xl:w-1/2 ">
+						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2 ">
 							<CourseDataChart
 								data={course.difficulty}
 								bgColors={[
@@ -106,57 +143,60 @@ const CoursePage = () => {
 								]}
 								options={{
 									title      : {
-										display  : true,
-										text     : 'Difficulty Scores',
-										fontSize : 20
+										display   : true,
+										text      : 'Difficulty Scores',
+										fontSize  : 20,
+										position  : 'top',
+										fontColor : 'black'
 									},
 									legend     : {
 										display  : true,
-										position : 'right'
+										position : 'bottom'
 									},
 									responsive : true
 								}}
 							/>
 						</div>
-						<div className="w-1/2 sm:w-full md:w-full lg:w-1/2 xl:w-1/2">
+						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
-								data={course.difficulty}
+								data={course.workload}
 								bgColors={[
 									'#B21F00',
 									'#0064A4',
-									'#1B3D6D',
+
 									'#FFD200',
 									'#F78D2D'
 								]}
 								bgColorsHover={[
 									'#501800',
 									'#6AA2B8',
-									'#1B3D8D',
+
 									'#F7EB5F',
 									'#F78D4D'
 								]}
 								labels={[
-									'Prepare to be wrecked',
-									'Easy A',
-									'Mostly easy',
-									'Kinda hard',
-									'Very challenging'
+									'0-5 hours',
+									'6-12 hours',
+									'13-18 hours',
+									'18+ hours'
 								]}
 								options={{
 									title      : {
-										display  : true,
-										text     : 'Difficulty Scores',
-										fontSize : 20
+										display   : true,
+										text      : 'Workload (hrs/week)',
+										fontSize  : 20,
+										fontColor : 'black'
 									},
 									legend     : {
 										display  : true,
-										position : 'right'
+										position : 'bottom'
 									},
 									responsive : true
 								}}
 							/>
 						</div>
 					</div>
+					<Reviews reviews={course.reviews} />
 				</div>
 			)}
 		</React.Fragment>

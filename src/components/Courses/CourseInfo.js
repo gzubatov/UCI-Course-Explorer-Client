@@ -2,7 +2,7 @@ import React from 'react';
 
 const CourseInfo = ({ course }) => {
 	return (
-		<div className="m-4">
+		<div className="m-5">
 			<h1 className="font-bold text-3xl">{`${course.department} ${course.course} - ${course.title}`}</h1>
 			<h3 className="font-bold text-xl">Professor: {course.professor}</h3>
 			<p>{course.description}</p>
