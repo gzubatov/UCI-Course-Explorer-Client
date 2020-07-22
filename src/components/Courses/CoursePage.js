@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import CourseInfo from './CourseInfo';
 import CourseDataChart from './CourseDataChart';
 import Reviews from '../Reviews/Reviews';
+import Input from '../FormElements/Input';
 
 const COURSES = [
 	{
@@ -22,37 +23,49 @@ const COURSES = [
 		workload         : [ 4, 19, 25, 49 ],
 		reviews          : [
 			{
-				review    :
+				review     :
 					'I found the book "Python Crash Course" very helpful. I read the sections reviewing the topics that were being covered on Canvas for that week.',
-				quarter   : 'Fall',
-				year      : 2018,
-				date      : 'July 2020',
-				grade     : 'A-',
-				recommend : true
+				quarter    : 'Fall',
+				year       : 2018,
+				date       : 'July 2020',
+				grade      : 'A-',
+				recommend  : true,
+				difficulty : [ 7, 7, 18, 31, 34 ],
+				workload   : [ 1, 2, 3, 4 ],
+				professor  : 'Martins'
 			},
 			{
-				review    :
+				review     :
 					"Very easy class if you're familiar with coding already. If not, it's a gentle and fair introduction, and should still not take up much of your time. The concepts are explained quite well and you are given plenty of exercises to work through to solidify those concepts.",
-				quarter   : 'Fall',
-				year      : 2018,
-				date      : 'July 2020',
-				grade     : 'A-',
-				recommend : false
+				quarter    : 'Fall',
+				year       : 2018,
+				date       : 'July 2020',
+				grade      : 'A-',
+				recommend  : false,
+				difficulty : [ 3, 14, 9, 25, 44 ],
+				workload   : [ 4, 3, 2, 1 ],
+				professor  : 'Ibrahim'
 			},
 			{
-				review  :
+				review     :
 					"I went into this class with no prior CS experience, and it was my first class at UCI. If I could do it differently, I would have taken it at a comm. college to save money (you can transfer up to 12 credits). I thought the class was very easy in the beginning, and then difficulty just ramped up towards the end. Other students have commented before that it really depends on the TA you get, and I completely agree. I had a TA who docked me for tiny formatting things, largely based on preference. When we worked in a group, other students in this class shared that this wasn't their experience at all (confirming that difficulty depends partially on TA). However, because it was my first class, I felt like I learned a lot. ",
-				quarter : 'Fall',
-				year    : 2018,
-				date    : 'July 2020',
-				grade   : 'A-'
+				quarter    : 'Fall',
+				year       : 2018,
+				date       : 'July 2020',
+				grade      : 'A-',
+				difficulty : [ 7, 7, 18, 31, 34 ],
+				workload   : [ 1, 2, 3, 4 ],
+				professor  : 'Martins'
 			},
 			{
-				review  :
+				review     :
 					'I found the book "Python Crash Course" very helpful. I read the sections reviewing the topics that were being covered on Canvas for that week.',
-				quarter : 'Fall',
-				year    : 2018,
-				date    : 'July 2020'
+				quarter    : 'Fall',
+				year       : 2018,
+				date       : 'July 2020',
+				difficulty : [ 3, 17, 8, 21, 24 ],
+				workload   : [ 4, 3, 2, 1 ],
+				professor  : 'Ibrahim'
 			}
 		]
 	},
@@ -96,8 +109,18 @@ const COURSES = [
 	}
 ];
 
+const OPTIONS = [
+	{ value: 'all', label: 'All' },
+	{ value: 'martins', label: 'Martins, Alberto' },
+	{ value: 'ibrahim', label: 'Ibrahim' }
+];
+
 const CoursePage = () => {
 	const [ course, setCourse ] = useState();
+	const [ filter, setFilter ] = useState(OPTIONS[0]);
+	const [ difficultyData, setDifficultyData ] = useState();
+	const [ workloadData, setWorkloadData ] = useState();
+	const [ reviews, setReviews ] = useState();
 	const courseId = useParams().cid;
 
 	useEffect(
@@ -106,20 +129,62 @@ const CoursePage = () => {
 				(course) => course.id.toString() === courseId
 			);
 			setCourse(filteredCourse);
+
+			let filteredReviews;
+
+			if (filter.value === 'all') {
+				filteredReviews = filteredCourse.reviews;
+			}
+			else {
+				filteredReviews = filteredCourse.reviews.filter(
+					(review) => review.professor.toLowerCase() === filter.value
+				);
+			}
+
+			setReviews(filteredReviews);
+
+			let filteredDifficulty = [ 0, 0, 0, 0, 0 ];
+			let filteredWorkload = [ 0, 0, 0, 0 ];
+
+			filteredReviews.forEach((review) => {
+				review.difficulty.forEach(
+					(rating, index) => (filteredDifficulty[index] += rating)
+				);
+
+				review.workload.forEach(
+					(rating, index) => (filteredWorkload[index] += rating)
+				);
+			});
+
+			setDifficultyData(filteredDifficulty);
+			setWorkloadData(filteredWorkload);
 		},
-		[ courseId ]
+		[ course, courseId, filter ]
 	);
+
+	// useEffect(() => {
+
+	// }, [filter])
 
 	return (
 		<React.Fragment>
 			{!course && <h1>Loading...</h1>}
 			{course && (
 				<div>
+					<Input
+						element="select"
+						id="professor"
+						label="Filter Professor"
+						options={OPTIONS}
+						onInput={setFilter}
+						defaultValue={filter}
+						value={filter}
+					/>
 					<CourseInfo course={course} />
 					<div className="flex flex-wrap">
 						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2 ">
 							<CourseDataChart
-								data={course.difficulty}
+								data={difficultyData}
 								bgColors={[
 									'#B21F00',
 									'#0064A4',
@@ -151,7 +216,7 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'bottom'
+										position : 'top'
 									},
 									responsive : true
 								}}
@@ -159,7 +224,7 @@ const CoursePage = () => {
 						</div>
 						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
-								data={course.workload}
+								data={workloadData}
 								bgColors={[
 									'#B21F00',
 									'#0064A4',
@@ -189,14 +254,14 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'bottom'
+										position : 'top'
 									},
 									responsive : true
 								}}
 							/>
 						</div>
 					</div>
-					<Reviews reviews={course.reviews} />
+					<Reviews reviews={reviews} />
 				</div>
 			)}
 		</React.Fragment>
