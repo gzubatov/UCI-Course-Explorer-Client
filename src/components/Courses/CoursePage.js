@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import courseReviewsAPI from '../../util/api';
+
 import CourseInfo from './CourseInfo';
 import CourseDataChart from './CourseDataChart';
 import Reviews from '../Reviews/Reviews';
@@ -125,39 +127,55 @@ const CoursePage = () => {
 
 	useEffect(
 		() => {
-			const filteredCourse = COURSES.find(
-				(course) => course.id.toString() === courseId
-			);
-			setCourse(filteredCourse);
-
-			let filteredReviews;
-
-			if (filter.value === 'all') {
-				filteredReviews = filteredCourse.reviews;
-			}
-			else {
-				filteredReviews = filteredCourse.reviews.filter(
-					(review) => review.professor.toLowerCase() === filter.value
+			const fetchCourseById = async () => {
+				const response = await courseReviewsAPI.get(
+					`/api/courses/id/${courseId}`
 				);
-			}
+				const courseData = response.data.course;
+				setCourse(courseData);
+				setReviews(courseData.reviews);
 
-			setReviews(filteredReviews);
+				const tempDiff = [ 0, 0, 0, 0, 0 ];
+				const tempWorkload = [ 0, 0, 0, 0 ];
+				courseData.reviews.forEach((review) => {
+					tempDiff[review.difficulty - 1]++;
+					tempWorkload[review.workload - 1]++;
+				});
+				setDifficultyData(tempDiff);
+				setWorkloadData(tempWorkload);
+			};
+			fetchCourseById();
 
-			let filteredDifficulty = [ 0, 0, 0, 0, 0 ];
-			let filteredWorkload = [ 0, 0, 0, 0 ];
+			// let filteredReviews = [];
+			// let filteredDifficulty = [ 0, 0, 0, 0, 0 ];
+			// let filteredWorkload = [ 0, 0, 0, 0 ];
 
-			filteredReviews.forEach((review) => {
-				review.difficulty.forEach(
-					(rating, index) => (filteredDifficulty[index] += rating)
-				);
+			// if (course) {
+			// 	if (filter.value === 'all') {
+			// 		filteredReviews = course.reviews;
+			// 	}
+			// 	else {
+			// 		filteredReviews = course.reviews.filter(
+			// 			(review) =>
+			// 				review.professor.toLowerCase() === filter.value
+			// 		);
+			// 	}
 
-				review.workload.forEach(
-					(rating, index) => (filteredWorkload[index] += rating)
-				);
-			});
+			// 	setReviews(filteredReviews);
 
-			setDifficultyData(filteredDifficulty);
-			setWorkloadData(filteredWorkload);
+			// 	filteredReviews.forEach((review) => {
+			// 		review.difficulty.forEach(
+			// 			(rating, index) => (filteredDifficulty[index] += rating)
+			// 		);
+
+			// 		review.workload.forEach(
+			// 			(rating, index) => (filteredWorkload[index] += rating)
+			// 		);
+			// 	});
+
+			// 	setDifficultyData(filteredDifficulty);
+			// 	setWorkloadData(filteredWorkload);
+			// }
 		},
 		[ course, courseId, filter ]
 	);

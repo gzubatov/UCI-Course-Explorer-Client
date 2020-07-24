@@ -31,11 +31,11 @@ const CourseList = (props) => {
 		[ sortAsc, sortListAsc, sortListDesc ]
 	);
 
-	const courseItems = props.courses.map((course, index) => {
+	const courseItems = props.courses.map((course) => {
 		return (
 			<CourseListItem
-				key={index}
-				id={course.id}
+				key={course._id}
+				id={course._id}
 				department={course.department}
 				course={course.courseNumber}
 				professor={course.professor}
