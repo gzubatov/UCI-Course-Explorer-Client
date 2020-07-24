@@ -16,6 +16,9 @@ const OPTIONS = [
 
 const CoursePage = () => {
 	const [ course, setCourse ] = useState();
+	const [ options, setOptions ] = useState([
+		{ value: 'all', label: 'All' }
+	]);
 	const [ filter, setFilter ] = useState(OPTIONS[0]);
 	const [ difficultyData, setDifficultyData ] = useState();
 	const [ workloadData, setWorkloadData ] = useState();
@@ -29,6 +32,14 @@ const CoursePage = () => {
 					`/api/courses/id/${courseId}`
 				);
 				const courseData = response.data.course;
+				const professorOptions = response.data.professorOptions;
+				const profOptionsMapped = professorOptions.map((el) => {
+					return {
+						value : el._id,
+						label : `${el.lastName}, ${el.firstName}`
+					};
+				});
+				setOptions((prev) => [ ...prev, ...profOptionsMapped ]);
 				setCourse(courseData);
 				setReviews(courseData.reviews);
 
@@ -42,37 +53,6 @@ const CoursePage = () => {
 				setWorkloadData(tempWorkload);
 			};
 			fetchCourseById();
-
-			// let filteredReviews = [];
-			// let filteredDifficulty = [ 0, 0, 0, 0, 0 ];
-			// let filteredWorkload = [ 0, 0, 0, 0 ];
-
-			// if (course) {
-			// 	if (filter.value === 'all') {
-			// 		filteredReviews = course.reviews;
-			// 	}
-			// 	else {
-			// 		filteredReviews = course.reviews.filter(
-			// 			(review) =>
-			// 				review.professor.toLowerCase() === filter.value
-			// 		);
-			// 	}
-
-			// 	setReviews(filteredReviews);
-
-			// 	filteredReviews.forEach((review) => {
-			// 		review.difficulty.forEach(
-			// 			(rating, index) => (filteredDifficulty[index] += rating)
-			// 		);
-
-			// 		review.workload.forEach(
-			// 			(rating, index) => (filteredWorkload[index] += rating)
-			// 		);
-			// 	});
-
-			// 	setDifficultyData(filteredDifficulty);
-			// 	setWorkloadData(filteredWorkload);
-			// }
 		},
 		[ courseId ]
 	);
@@ -122,7 +102,7 @@ const CoursePage = () => {
 							element="select"
 							id="professor"
 							label="Filter by Professor"
-							options={OPTIONS}
+							options={options}
 							onInput={setFilter}
 							defaultValue={filter}
 							value={filter}
