@@ -147,11 +147,11 @@ const CoursePage = () => {
 									'#F78D4D'
 								]}
 								labels={[
-									'Prepare to be wrecked',
 									'Easy A',
 									'Mostly easy',
 									'Kinda hard',
-									'Very challenging'
+									'Very challenging',
+									'Prepare to be wrecked'
 								]}
 								options={{
 									title      : {
