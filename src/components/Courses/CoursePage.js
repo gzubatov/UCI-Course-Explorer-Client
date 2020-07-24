@@ -95,7 +95,7 @@ const CoursePage = () => {
 		<React.Fragment>
 			{!course && <h1>Loading...</h1>}
 			{course && (
-				<div>
+				<div className="overflow-hidden">
 					<CourseInfo course={course} />
 					<div className="max-w-sm ml-4 mr-4">
 						<Input
@@ -109,7 +109,7 @@ const CoursePage = () => {
 						/>
 					</div>
 					<div className="flex flex-wrap m-4">
-						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2 ">
+						<div className="flex-auto sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={difficultyData}
 								bgColors={[
@@ -153,7 +153,7 @@ const CoursePage = () => {
 								}}
 							/>
 						</div>
-						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2">
+						<div className="flex-auto sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={workloadData}
 								bgColors={[
@@ -185,7 +185,7 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'right',
+										position : 'left',
 										labels   : {
 											fontColor : 'black',
 											fontSize  : 16
