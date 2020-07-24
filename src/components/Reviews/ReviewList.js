@@ -2,14 +2,14 @@ import React from 'react';
 import ReviewItem from './ReviewItem';
 
 const ReviewList = (props) => {
-	const reviews = props.reviews.map((review, index) => (
+	const reviews = props.reviews.map((review) => (
 		<ReviewItem
-			key={index}
+			key={review._id}
 			review={review.review}
-			grade={review.grade}
+			grade={review.details.grade}
 			quarter={`${review.quarter} ${review.year}`}
-			date={review.date}
-			recommend={review.recommend}
+			date={review.reviewDate}
+			recommend={review.details.recommend}
 		/>
 	));
 	return <React.Fragment>{reviews}</React.Fragment>;

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ReviewItem = (props) => {
-	console.log(props);
 	return (
 		<div className="rounded overflow-hidden shadow-lg border border-solid mb-2 ">
 			<div className="px-6 py-4">
