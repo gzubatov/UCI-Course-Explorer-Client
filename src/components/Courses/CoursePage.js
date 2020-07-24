@@ -171,17 +171,19 @@ const CoursePage = () => {
 			{!course && <h1>Loading...</h1>}
 			{course && (
 				<div>
-					<Input
-						element="select"
-						id="professor"
-						label="Filter Professor"
-						options={OPTIONS}
-						onInput={setFilter}
-						defaultValue={filter}
-						value={filter}
-					/>
 					<CourseInfo course={course} />
-					<div className="flex flex-wrap">
+					<div className="max-w-sm ml-4 mr-4">
+						<Input
+							element="select"
+							id="professor"
+							label="Filter by Professor"
+							options={OPTIONS}
+							onInput={setFilter}
+							defaultValue={filter}
+							value={filter}
+						/>
+					</div>
+					<div className="flex flex-wrap m-4">
 						<div className="flex-auto sm:w-full md:w-full lg:w-1/2 xl:w-1/2 ">
 							<CourseDataChart
 								data={difficultyData}
@@ -216,7 +218,11 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'top'
+										position : 'left',
+										labels   : {
+											fontColor : 'black',
+											fontSize  : 16
+										}
 									},
 									responsive : true
 								}}
@@ -254,7 +260,11 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'top'
+										position : 'right',
+										labels   : {
+											fontColor : 'black',
+											fontSize  : 16
+										}
 									},
 									responsive : true
 								}}

@@ -1,29 +1,46 @@
 import React from 'react';
 
+const CourseInfoDetail = ({ label, value }) => {
+	return (
+		<div className="mr-4 mb-4 w-auto">
+			<span className="font-bold pr-2">{label}</span> {value}
+		</div>
+	);
+};
+
 const CourseInfo = ({ course }) => {
 	return (
-		<div className="m-5">
+		<div className="m-5 mt-0 mb-0 w-auto">
 			<h1 className="font-bold text-3xl">{`${course.department} ${course.course} - ${course.title}`}</h1>
-			<h3 className="font-bold text-xl">Professor: {course.professor}</h3>
 			<p>{course.description}</p>
+			<hr />
 			<br />
-			<ul>
+			<CourseInfoDetail label="Prerequisites" value={course.prereqs} />
+			<hr />
+			<ul className="flex flex-wrap mt-2">
 				<li>
-					<span className="font-bold">Prerequisites:</span>{' '}
-					{course.prereqs}
+					<CourseInfoDetail label="Attendance" value="Mandatory" />
 				</li>
 				<li>
-					<span className="font-bold">Group Work:</span>{' '}
-					{course.groupWork}
+					<CourseInfoDetail label="iClicker" value="No" />
 				</li>
 				<li>
-					<span className="font-bold">Homework:</span> Yes
+					<CourseInfoDetail
+						label="Group Work"
+						value={course.groupWork}
+					/>
 				</li>
 				<li>
-					<span className="font-bold">Quizzes:</span> Yes
+					<CourseInfoDetail label="Homework" value="Yes" />
 				</li>
 				<li>
-					<span className="font-bold">Exams:</span> Yes
+					<CourseInfoDetail label="Quizzes" value="Yes" />
+				</li>
+				<li>
+					<CourseInfoDetail label="Exams" value="Yes" />
+				</li>
+				<li>
+					<CourseInfoDetail label="Textbook" value="Not Required" />
 				</li>
 			</ul>
 		</div>

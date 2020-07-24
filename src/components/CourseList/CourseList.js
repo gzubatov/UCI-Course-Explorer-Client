@@ -37,9 +37,9 @@ const CourseList = (props) => {
 				key={index}
 				id={course.id}
 				department={course.department}
-				course={course.course}
+				course={course.courseNumber}
 				professor={course.professor}
-				rating={course.difficultyRating}
+				rating={course.avgDifficulty}
 			/>
 		);
 	});

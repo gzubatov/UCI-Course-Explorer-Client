@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import courseReviewsAPI from '../../util/api';
+
 import CourseList from './CourseList';
 
 const COURSES = [
@@ -54,23 +56,41 @@ const CourseSearch = () => {
 
 	useEffect(
 		() => {
-			let courses;
-			if (!course) {
-				courses = COURSES.filter(
-					(course) => course.department.toLowerCase() === department
-				);
-			}
-			else {
-				courses = COURSES.filter((c) => {
-					return (
-						c.department.toLowerCase() ===
-							department.toLowerCase() &&
-						c.course.toString().toLowerCase() ===
-							course.toLowerCase()
+			const fetchCourses = async () => {
+				let results;
+				if (!course) {
+					const response = await courseReviewsAPI.get(
+						`/api/courses/${department.toUpperCase()}`
 					);
-				});
-			}
-			setLoadedCourses(courses);
+					results = response.data.courses;
+				}
+				else {
+					const response = await courseReviewsAPI.get(
+						`/api/courses/${department.toUpperCase()}/${course}`
+					);
+					results = response.data.course;
+				}
+				console.log(results);
+				setLoadedCourses(results);
+			};
+			fetchCourses();
+			// let courses;
+			// if (!course) {
+			// 	courses = COURSES.filter(
+			// 		(course) => course.department.toLowerCase() === department
+			// 	);
+			// }
+			// else {
+			// 	courses = COURSES.filter((c) => {
+			// 		return (
+			// 			c.department.toLowerCase() ===
+			// 				department.toLowerCase() &&
+			// 			c.course.toString().toLowerCase() ===
+			// 				course.toLowerCase()
+			// 		);
+			// 	});
+			// }
+			//setLoadedCourses(courses);
 		},
 		[ department, course ]
 	);
