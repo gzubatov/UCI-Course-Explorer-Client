@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import courseReviewsAPI from '../../util/api';
@@ -8,6 +8,7 @@ import CourseDataChart from './CourseDataChart';
 import Reviews from '../Reviews/Reviews';
 import Input from '../FormElements/Input';
 import LoadingSpinner from '../UIElements/LoadingSpinner';
+import { CourseContext } from '../../context/course-context';
 
 const OPTIONS = [
 	{ value: 'all', label: 'All' },
@@ -16,6 +17,7 @@ const OPTIONS = [
 ];
 
 const CoursePage = () => {
+	const courseCtx = useContext(CourseContext);
 	const [ course, setCourse ] = useState();
 	const [ options, setOptions ] = useState([
 		{ value: 'all', label: 'All' }
@@ -42,6 +44,9 @@ const CoursePage = () => {
 				});
 				setOptions((prev) => [ ...prev, ...profOptionsMapped ]);
 				setCourse(courseData);
+				courseCtx.setCourse(courseData);
+				courseCtx.courseId = courseId;
+
 				setReviews(courseData.reviews);
 
 				const tempDiff = [ 0, 0, 0, 0, 0 ];
@@ -55,7 +60,7 @@ const CoursePage = () => {
 			};
 			fetchCourseById();
 		},
-		[ courseId ]
+		[ courseCtx, courseId ]
 	);
 
 	useEffect(
@@ -101,7 +106,7 @@ const CoursePage = () => {
 			)}
 			{course && (
 				<div className="overflow-hidden">
-					<CourseInfo course={course} />
+					<CourseInfo course={course} courseId={courseId} />
 					<div className="max-w-sm ml-4 mr-4">
 						<Input
 							element="select"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import Input from '../FormElements/Input';
 
@@ -57,7 +58,6 @@ const ReviewForm = () => {
 							id="departments"
 							label="Departments"
 							defaultValue={department}
-							value={department}
 							options={OPTIONS}
 							onInput={setDepartment}
 							onFocus={() => setIsTouched(true)}
