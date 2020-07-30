@@ -54,6 +54,7 @@ const Input = (props) => {
 					onChange={inputChangeHandler}
 					className={`${props.classes}`}
 					onFocus={props.onFocus}
+					defaultValue={props.defaultValue}
 				/>
 			);
 			break;

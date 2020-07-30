@@ -14353,6 +14353,26 @@ video {
   background-color: var(--UCI-BLUE);
 }
 
+/* Loading Spinner */
+
+.__spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 3px solid lightgray;
+  border-top-color: var(--UCI-BLUE);
+  animation: spinner 0.7s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

@@ -7,6 +7,7 @@ import CourseInfo from './CourseInfo';
 import CourseDataChart from './CourseDataChart';
 import Reviews from '../Reviews/Reviews';
 import Input from '../FormElements/Input';
+import LoadingSpinner from '../UIElements/LoadingSpinner';
 
 const OPTIONS = [
 	{ value: 'all', label: 'All' },
@@ -93,7 +94,11 @@ const CoursePage = () => {
 
 	return (
 		<React.Fragment>
-			{!course && <h1>Loading...</h1>}
+			{!course && (
+				<div className="w-full mt-20 flex justify-center items-center">
+					<LoadingSpinner message="Loading..." />
+				</div>
+			)}
 			{course && (
 				<div className="overflow-hidden">
 					<CourseInfo course={course} />

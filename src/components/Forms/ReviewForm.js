@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-import Input from './FormElements/Input';
+import Input from '../FormElements/Input';
 
 const OPTIONS = [
 	{ value: 'compsci', label: 'COMP SCI' },
@@ -9,12 +9,26 @@ const OPTIONS = [
 	{ value: 'cgs', label: 'Computer Game Science' }
 ];
 
-const SearchForm = () => {
+const ReviewForm = () => {
+	const { department: dept, course: courseNumber } = useParams();
 	const [ department, setDepartment ] = useState();
 	const [ course, setCourse ] = useState();
 	const [ isTouched, setIsTouched ] = useState(false);
 	const [ isFocused, setIsFocused ] = useState(false);
 	const history = useHistory();
+
+	useEffect(
+		() => {
+			console.log(dept, courseNumber);
+			if (dept && courseNumber) {
+				const selectedOption = OPTIONS.filter((o) => o.value === dept);
+				console.log(selectedOption[0]);
+				console.log(OPTIONS[0]);
+				setDepartment(selectedOption[0]);
+			}
+		},
+		[ dept, courseNumber, department ]
+	);
 
 	const formHandler = (e) => {
 		e.preventDefault();
@@ -42,6 +56,8 @@ const SearchForm = () => {
 							element="select"
 							id="departments"
 							label="Departments"
+							defaultValue={department}
+							value={department}
 							options={OPTIONS}
 							onInput={setDepartment}
 							onFocus={() => setIsTouched(true)}
@@ -53,6 +69,7 @@ const SearchForm = () => {
 							element="text"
 							id="course number"
 							label="Course Number"
+							defaultValue={courseNumber ? courseNumber : ''}
 							options={OPTIONS}
 							onInput={setCourse}
 							classes="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -86,4 +103,4 @@ const SearchForm = () => {
 	);
 };
 
-export default SearchForm;
+export default ReviewForm;

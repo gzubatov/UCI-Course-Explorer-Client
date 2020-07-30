@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
+import ReviewForm from './components/Forms/ReviewForm';
 import CourseSearch from './components/CourseList/CourseSearch';
 import CoursePage from './components/Courses/CoursePage';
 
@@ -20,6 +21,16 @@ const App = () => {
 				<Route path="/course/:cid">
 					<div className="flex">
 						<CoursePage />
+					</div>
+				</Route>
+				<Route path="/review" exact>
+					<div className="flex justify-center">
+						<ReviewForm />
+					</div>
+				</Route>
+				<Route path="/review/:department/:course" exact>
+					<div className="flex justify-center">
+						<ReviewForm />
 					</div>
 				</Route>
 				<Route path="/:department" exact>
