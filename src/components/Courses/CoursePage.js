@@ -46,6 +46,7 @@ const CoursePage = () => {
 				setCourse(courseData);
 				courseCtx.setCourse(courseData);
 				courseCtx.courseId = courseId;
+				courseCtx.professors = profOptionsMapped;
 
 				setReviews(courseData.reviews);
 

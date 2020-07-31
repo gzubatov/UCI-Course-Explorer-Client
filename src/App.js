@@ -14,9 +14,10 @@ const App = () => {
 	return (
 		<CourseContext.Provider
 			value={{
-				course    : null,
-				courseId  : null,
-				setCourse : function(newCourse) {
+				course     : null,
+				courseId   : null,
+				professors : null,
+				setCourse  : function(newCourse) {
 					this.course = newCourse;
 				}
 			}}
