@@ -26,7 +26,18 @@ const CoursePage = () => {
 	const [ difficultyData, setDifficultyData ] = useState();
 	const [ workloadData, setWorkloadData ] = useState();
 	const [ reviews, setReviews ] = useState();
+	const [ windowWidth, setWindowSize ] = useState(window.innerWidth);
 	const courseId = useParams().cid;
+
+	const handleResize = () => {
+		setWindowSize(window.innerWidth);
+	};
+	useEffect(() => {
+		handleResize();
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	useEffect(
 		() => {
@@ -120,22 +131,22 @@ const CoursePage = () => {
 						/>
 					</div>
 					<div className="flex flex-wrap m-4">
-						<div className="flex-auto sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
+						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={difficultyData}
 								bgColors={[
-									'#B21F00',
-									'#0064A4',
-									'#1B3D6D',
-									'#FFD200',
-									'#F78D2D'
+									'#a6dcff',
+									'#7fb2da',
+									'#5c89b5',
+									'#3b6291',
+									'#1b3d6d'
 								]}
 								bgColorsHover={[
-									'#501800',
-									'#6AA2B8',
-									'#1B3D8D',
-									'#F7EB5F',
-									'#F78D4D'
+									'#a6dcff',
+									'#7fb2da',
+									'#5c89b5',
+									'#3b6291',
+									'#1b3d6d'
 								]}
 								labels={[
 									'Easy A',
@@ -164,22 +175,20 @@ const CoursePage = () => {
 								}}
 							/>
 						</div>
-						<div className="flex-auto sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
+						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={workloadData}
 								bgColors={[
-									'#B21F00',
-									'#0064A4',
-
-									'#FFD200',
-									'#F78D2D'
+									'#7fb2da',
+									'#5c89b5',
+									'#3b6291',
+									'#1b3d6d'
 								]}
 								bgColorsHover={[
-									'#501800',
-									'#6AA2B8',
-
-									'#F7EB5F',
-									'#F78D4D'
+									'#7fb2da',
+									'#5c89b5',
+									'#3b6291',
+									'#1b3d6d'
 								]}
 								labels={[
 									'0-5 hours',
@@ -196,7 +205,10 @@ const CoursePage = () => {
 									},
 									legend     : {
 										display  : true,
-										position : 'left',
+										position :
+											windowWidth < 768
+												? 'left'
+												: 'right',
 										labels   : {
 											fontColor : 'black',
 											fontSize  : 16
