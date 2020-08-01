@@ -374,103 +374,60 @@ const ReviewForm = (props) => {
 
 				<div className="mb-4">
 					<label className="font-bold">
-						<h4 className="font-bold">iClicker used?</h4>
+						<h4 className="font-bold">
+							Please select any of the following that applied to
+							your class:
+						</h4>
 					</label>
 					<div className="inline-block mr-12">
 						<input
 							className="mr-2"
-							type="radio"
+							type="checkbox"
 							name="iclicker"
-							value={true}
+							id="iclicker"
 							ref={register}
-						/>Yes
+						/>
+						<label htmlFor="iclicker">iClicker Used</label>
 					</div>
 					<div className="inline-block mr-12">
 						<input
 							className="mr-2"
-							type="radio"
-							name="iclicker"
-							value={false}
-							ref={register}
-						/>No
-					</div>
-				</div>
-
-				<div className="mb-4">
-					<label className="font-bold">
-						<h4 className="font-bold">
-							Was the textbook required?
-						</h4>
-					</label>
-					<div className="inline-block mr-12">
-						<input
-							className="mr-2"
-							type="radio"
-							name="textbook"
-							value={true}
-							ref={register}
-						/>Yes
-					</div>
-					<div className="inline-block mr-12">
-						<input
-							className="mr-2"
-							type="radio"
-							name="textbook"
-							value={false}
-							ref={register}
-						/>No
-					</div>
-				</div>
-
-				<div className="mb-4">
-					<label className="font-bold">
-						<h4 className="font-bold">
-							Does this class require group work?
-						</h4>
-					</label>
-					<div className="inline-block mr-12">
-						<input
-							className="mr-2"
-							type="radio"
+							type="checkbox"
 							name="groupWork"
-							value={true}
+							id="groupWork"
 							ref={register}
-						/>Yes
+						/>
+						<label htmlFor="groupWork">Group Work</label>
 					</div>
 					<div className="inline-block mr-12">
 						<input
 							className="mr-2"
-							type="radio"
-							name="groupWork"
-							value={false}
+							type="checkbox"
+							name="textbook"
+							id="textbook"
 							ref={register}
-						/>No
+						/>
+						<label htmlFor="textbook">Textbook Required</label>
 					</div>
-				</div>
-
-				<div className="mb-4">
-					<label className="font-bold">
-						<h4 className="font-bold">
-							Did your class have a curve?
-						</h4>
-					</label>
 					<div className="inline-block mr-12">
 						<input
 							className="mr-2"
-							type="radio"
+							type="checkbox"
+							name="heavyReading"
+							id="heavyReading"
+							ref={register}
+						/>
+						<label htmlFor="heavyReading">Heavy Reading</label>
+					</div>
+					<div className="inline-block mr-12">
+						<input
+							className="mr-2"
+							type="checkbox"
 							name="curve"
-							value={true}
+							id="curve"
 							ref={register}
-						/>Yes
-					</div>
-					<div className="inline-block mr-12">
-						<input
-							className="mr-2"
-							type="radio"
-							name="curve"
-							value={false}
-							ref={register}
-						/>No
+						/>
+						<label htmlFor="curve">Class Curved</label>
 					</div>
 				</div>
 
