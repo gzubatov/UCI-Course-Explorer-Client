@@ -3,6 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 
+import ErrorBanner from '../UIElements/ErrorBanner';
+import courseReviewsAPI from '../../util/api';
+
 const workloadOptions = [
 	{ value: 0, label: '0-5 hours' },
 	{ value: 1, label: '6-12 hours' },
@@ -45,11 +48,32 @@ const gradeOptions = [
 ];
 
 const ReviewForm = (props) => {
-	const { register, handleSubmit, control, errors } = useForm();
+	const [ addProfessor, setAddProfessor ] = useState(false);
+	const [ professorOptions, setProfessorOptions ] = useState([]);
+	const { register, handleSubmit, control, errors, watch } = useForm();
 	const history = useHistory();
+
+	useEffect(() => {
+		const fetchProfessors = async () => {
+			const response = await courseReviewsAPI.get('/api/professors');
+			const profOptionsMapped = response.data.professors.map((el) => {
+				return {
+					value : el._id,
+					label : `${el.lastName}, ${el.firstName}`
+				};
+			});
+			setProfessorOptions(profOptionsMapped);
+		};
+		fetchProfessors();
+	}, []);
 
 	const formHandler = (data) => {
 		console.log(data);
+	};
+
+	const handleAddProfClick = (e) => {
+		e.preventDefault();
+		setAddProfessor((prev) => !prev);
 	};
 
 	return (
@@ -63,13 +87,69 @@ const ReviewForm = (props) => {
 				</h2>
 				<div className="mb-4">
 					<label className="font-bold">Professor</label>
-					<Controller
-						as={Select}
-						name="Professor"
-						control={control}
-						options={props.professors}
-						className="sm:w-full md:w-64 lg:w-64 xl:w-64"
-					/>
+					<p>
+						Don't see your professor listed? Add them.{' '}
+						<button
+							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded"
+							onClick={handleAddProfClick}
+						>
+							{addProfessor ? 'Hide' : '+ Add'} New Professor
+						</button>
+					</p>
+					{!addProfessor && (
+						<Controller
+							as={Select}
+							name="professor"
+							control={control}
+							options={professorOptions}
+							rules={{ required: !addProfessor }}
+							className="sm:w-full md:w-64 lg:w-64 xl:w-64"
+							isDisabled={addProfessor}
+						/>
+					)}
+					{addProfessor && (
+						<div>
+							<p>
+								Please enter the name of the professor you would
+								like to add. (Check spelling please!)
+							</p>
+							<div className="flex flex-wrap">
+								<div className="w-48 inline-block mr-6">
+									<label className="font-bold">
+										Last Name
+									</label>
+									<input
+										type="text"
+										name="lastName"
+										ref={register({
+											required : addProfessor
+										})}
+										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									/>
+								</div>
+								<div className="w-48 inline-block mr-6">
+									<label className="font-bold">
+										First Name
+									</label>
+									<input
+										type="text"
+										name="firstName"
+										ref={register({
+											required : addProfessor
+										})}
+										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									/>
+								</div>
+							</div>
+						</div>
+					)}
+					{(errors.professor ||
+						(errors.lastName || errors.firstName)) && (
+						<ErrorBanner
+							header="Required!"
+							message="You must select a professor to submit a review."
+						/>
+					)}
 				</div>
 				<div className="mb-4">
 					<h4 className="font-bold">How difficult is this course?</h4>
@@ -126,7 +206,12 @@ const ReviewForm = (props) => {
 							Prepare to get wrecked!
 						</p>
 					</div>
-					{errors.difficulty && <p>Required</p>}
+					{errors.difficulty && (
+						<ErrorBanner
+							header="Required!"
+							message="You must rate the course difficulty to submit a review."
+						/>
+					)}
 				</div>
 
 				<div className="mb-4">
@@ -144,6 +229,12 @@ const ReviewForm = (props) => {
 						rules={{ required: true }}
 						className="w-full sm:w-full md:w-1/4 lg:w-1/6 xl:w-1/6"
 					/>
+					{errors.workload && (
+						<ErrorBanner
+							header="Required!"
+							message="You must rate the course workload to submit a review."
+						/>
+					)}
 				</div>
 				<div className="mb-4">
 					<h4 className="font-bold">
@@ -177,6 +268,12 @@ const ReviewForm = (props) => {
 							/>
 						</div>
 					</div>
+					{(errors.quarter || errors.year) && (
+						<ErrorBanner
+							header="Required!"
+							message="You must select the quarter you took the class to submit a review."
+						/>
+					)}
 				</div>
 
 				<h2 className="mb-4 border border-solid border-black border-t-0 border-l-0 border-r-0">

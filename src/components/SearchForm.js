@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Input from './FormElements/Input';
+import ErrorBanner from './UIElements/ErrorBanner';
 
 const OPTIONS = [
 	{ value: 'compsci', label: 'COMP SCI' },
@@ -70,16 +71,11 @@ const SearchForm = () => {
 				{!department &&
 				isTouched &&
 				isFocused && (
-					<div
-						className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
-						role="alert"
-					>
-						<p className="font-bold">Please Select A Department!</p>
-						<p>
-							At minimum you must select a department to conduct a
-							search.
-						</p>
-					</div>
+					<ErrorBanner
+						header="Please Select A Department!"
+						message="At minimum you must select a department to conduct a
+					search."
+					/>
 				)}
 			</form>
 		</div>
