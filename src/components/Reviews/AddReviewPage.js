@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import courseReviewsAPI from '../../util/api';
 
@@ -13,7 +13,7 @@ const AddReviewPage = () => {
 	const [ course, setCourse ] = useState(courseContext.course);
 	const [ options, setOptions ] = useState(courseContext.professors);
 	const courseId = useParams().cid;
-	console.log(courseContext.courseId);
+	const history = useHistory();
 
 	useEffect(
 		() => {
@@ -36,12 +36,50 @@ const AddReviewPage = () => {
 				courseContext.professors = profOptionsMapped;
 			};
 			if (!courseContext.course) {
-				console.log('in useEffect');
 				fetchCourseById();
 			}
 		},
 		[ courseContext, courseContext.course, courseId ]
 	);
+
+	const formHandler = async (data) => {
+		console.log(data);
+		const payload = {
+			quarter            : data.quarter.value,
+			year               : parseInt(data.year.value),
+			review             :
+				data.review.length > 0 ? data.review : undefined,
+			difficulty         : parseInt(data.difficulty),
+			workload           : data.workload.value,
+			details            : {
+				//grade        : data.grade.value,
+				//recommend    : data.recommend === 'true' ? true : false,
+				//attendance   : data.attendance,
+				iClicker     : data.iclicker,
+				groupWork    : data.groupWork,
+				textbook     : data.textbook,
+				heavyReading : data.heavyReading,
+				curve        : data.curve
+			},
+			professor          : data.professor
+				? data.professor.value
+				: undefined,
+			course             : courseId,
+			professorLastName  : data.lastName,
+			professorFirstName : data.firstName
+		};
+
+		if (data.grade) payload.grade = data.grade.value;
+		if (data.recommend) payload.recommend = data.recommend;
+		if (data.attendance) payload.attendance = data.attendance;
+
+		console.log(payload);
+		const response = await courseReviewsAPI.post('/api/reviews', payload);
+
+		if (response.status === 201) {
+			history.push('/');
+		}
+	};
 
 	return (
 		<React.Fragment>
@@ -53,7 +91,10 @@ const AddReviewPage = () => {
 			{course && (
 				<div className="overflow-hidden">
 					<CourseInfo course={course} />
-					<ReviewForm professors={options} />
+					<ReviewForm
+						professors={options}
+						formHandler={formHandler}
+					/>
 				</div>
 			)}
 		</React.Fragment>

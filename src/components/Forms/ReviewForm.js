@@ -68,44 +68,44 @@ const ReviewForm = (props) => {
 		fetchProfessors();
 	}, []);
 
-	const formHandler = async (data) => {
-		console.log(data);
-		const payload = {
-			quarter            : data.quarter.value,
-			year               : parseInt(data.year.value),
-			review             :
-				data.review.length > 0 ? data.review : undefined,
-			difficulty         : parseInt(data.difficulty),
-			workload           : data.workload.value,
-			details            : {
-				//grade        : data.grade.value,
-				//recommend    : data.recommend === 'true' ? true : false,
-				//attendance   : data.attendance,
-				iClicker     : data.iclicker,
-				groupWork    : data.groupWork,
-				textbook     : data.textbook,
-				heavyReading : data.heavyReading,
-				curve        : data.curve
-			},
-			professor          : data.professor
-				? data.professor.value
-				: undefined,
-			course             : courseId,
-			professorLastName  : data.lastName,
-			professorFirstName : data.firstName
-		};
+	// const formHandler = async (data) => {
+	// 	console.log(data);
+	// 	const payload = {
+	// 		quarter            : data.quarter.value,
+	// 		year               : parseInt(data.year.value),
+	// 		review             :
+	// 			data.review.length > 0 ? data.review : undefined,
+	// 		difficulty         : parseInt(data.difficulty),
+	// 		workload           : data.workload.value,
+	// 		details            : {
+	// 			//grade        : data.grade.value,
+	// 			//recommend    : data.recommend === 'true' ? true : false,
+	// 			//attendance   : data.attendance,
+	// 			iClicker     : data.iclicker,
+	// 			groupWork    : data.groupWork,
+	// 			textbook     : data.textbook,
+	// 			heavyReading : data.heavyReading,
+	// 			curve        : data.curve
+	// 		},
+	// 		professor          : data.professor
+	// 			? data.professor.value
+	// 			: undefined,
+	// 		course             : courseId,
+	// 		professorLastName  : data.lastName,
+	// 		professorFirstName : data.firstName
+	// 	};
 
-		if (data.grade) payload.grade = data.grade.value;
-		if (data.recommend) payload.recommend = data.recommend;
-		if (data.attendance) payload.attendance = data.attendance;
+	// 	if (data.grade) payload.grade = data.grade.value;
+	// 	if (data.recommend) payload.recommend = data.recommend;
+	// 	if (data.attendance) payload.attendance = data.attendance;
 
-		console.log(payload);
-		const response = await courseReviewsAPI.post('/api/reviews', payload);
+	// 	console.log(payload);
+	// 	const response = await courseReviewsAPI.post('/api/reviews', payload);
 
-		if (response.status === 201) {
-			history.push('/');
-		}
-	};
+	// 	if (response.status === 201) {
+	// 		history.push('/');
+	// 	}
+	// };
 
 	const handleAddProfClick = (e) => {
 		e.preventDefault();
@@ -116,7 +116,7 @@ const ReviewForm = (props) => {
 		<div className="w-full">
 			<form
 				className="bg-white rounded shadow-lg px-8 pt-6 pb-4 mb-4 sm:w-full md:w-full lg:w-4/5 xl:w-4/5 m-auto"
-				onSubmit={handleSubmit(formHandler)}
+				onSubmit={handleSubmit(props.formHandler)}
 			>
 				<h2 className="mb-4 border border-solid border-black border-t-0 border-l-0 border-r-0">
 					Required
