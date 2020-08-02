@@ -46,11 +46,13 @@ const CoursePage = () => {
 					`/api/courses/id/${courseId}`
 				);
 				const courseData = response.data.course;
+				console.log(response.data.professorOptions);
 				const professorOptions = response.data.professorOptions;
 				const profOptionsMapped = professorOptions.map((el) => {
 					return {
 						value : el._id,
-						label : `${el.lastName}, ${el.firstName}`
+						label : `${el.professor[0].lastName}, ${el.professor[0]
+							.firstName}`
 					};
 				});
 				setOptions((prev) => [ ...prev, ...profOptionsMapped ]);
@@ -134,20 +136,41 @@ const CoursePage = () => {
 						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={difficultyData}
+								// bgColors={[
+								// 	'#a6dcff',
+								// 	'#7fb2da',
+								// 	'#5c89b5',
+								// 	'#3b6291',
+								// 	'#1b3d6d'
+								// ]}
+								// bgColorsHover={[
+								// 	'#a6dcff',
+								// 	'#7fb2da',
+								// 	'#5c89b5',
+								// 	'#3b6291',
+								// 	'#1b3d6d'
+								// ]}
+								// bgColors={[
+								// 	'#0064a4',
+								// 	'#4d908c',
+								// 	'#ffd200',
+								// 	'#ffb100',
+								// 	'#ff0000'
+								// ]}
 								bgColors={[
-									'#a6dcff',
-									'#7fb2da',
-									'#5c89b5',
-									'#3b6291',
-									'#1b3d6d'
+									'#44bd32',
+									'#4cd137',
+									'#ffd32a',
+									'#ffa801',
+									'#ff3f34'
 								]}
-								bgColorsHover={[
-									'#a6dcff',
-									'#7fb2da',
-									'#5c89b5',
-									'#3b6291',
-									'#1b3d6d'
-								]}
+								// bgColorsHover={[
+								// 	'#a6dcff',
+								// 	'#7fb2da',
+								// 	'#5c89b5',
+								// 	'#3b6291',
+								// 	'#1b3d6d'
+								// ]}
 								labels={[
 									'Easy A',
 									'Mostly easy',
@@ -178,11 +201,18 @@ const CoursePage = () => {
 						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
 							<CourseDataChart
 								data={workloadData}
+								// bgColors={[
+								// 	'#7fb2da',
+								// 	'#5c89b5',
+								// 	'#3b6291',
+								// 	'#1b3d6d'
+								// ]}
 								bgColors={[
-									'#7fb2da',
-									'#5c89b5',
-									'#3b6291',
-									'#1b3d6d'
+									//'#44bd32',
+									'#4cd137',
+									'#ffd32a',
+									'#ffa801',
+									'#ff3f34'
 								]}
 								bgColorsHover={[
 									'#7fb2da',
