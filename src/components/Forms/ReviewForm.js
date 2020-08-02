@@ -100,7 +100,11 @@ const ReviewForm = (props) => {
 		if (data.attendance) payload.attendance = data.attendance;
 
 		console.log(payload);
-		await courseReviewsAPI.post('/api/reviews', payload);
+		const response = await courseReviewsAPI.post('/api/reviews', payload);
+
+		if (response.status === 201) {
+			history.push('/');
+		}
 	};
 
 	const handleAddProfClick = (e) => {
