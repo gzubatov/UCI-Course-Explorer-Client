@@ -39,7 +39,7 @@ const CourseList = (props) => {
 				department={course.department}
 				course={course.courseNumber}
 				professor={course.professor}
-				rating={course.avgDifficulty}
+				rating={course.avgRatings.avgDifficulty}
 			/>
 		);
 	});

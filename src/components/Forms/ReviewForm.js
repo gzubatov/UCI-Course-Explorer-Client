@@ -7,10 +7,10 @@ import ErrorBanner from '../UIElements/ErrorBanner';
 import courseReviewsAPI from '../../util/api';
 
 const workloadOptions = [
-	{ value: 0, label: '0-5 hours' },
-	{ value: 1, label: '6-12 hours' },
-	{ value: 2, label: '13-18 hours' },
-	{ value: 3, label: '+18 hours' }
+	{ value: 1, label: '0-5 hours' },
+	{ value: 2, label: '6-12 hours' },
+	{ value: 3, label: '13-18 hours' },
+	{ value: 4, label: '+18 hours' }
 ];
 
 const quarterOptions = [
@@ -50,8 +50,9 @@ const gradeOptions = [
 const ReviewForm = (props) => {
 	const [ addProfessor, setAddProfessor ] = useState(false);
 	const [ professorOptions, setProfessorOptions ] = useState([]);
-	const { register, handleSubmit, control, errors, watch } = useForm();
+	const { register, handleSubmit, control, errors } = useForm();
 	const history = useHistory();
+	const courseId = useParams().cid;
 
 	useEffect(() => {
 		const fetchProfessors = async () => {
@@ -67,8 +68,39 @@ const ReviewForm = (props) => {
 		fetchProfessors();
 	}, []);
 
-	const formHandler = (data) => {
+	const formHandler = async (data) => {
 		console.log(data);
+		const payload = {
+			quarter            : data.quarter.value,
+			year               : parseInt(data.year.value),
+			review             :
+				data.review.length > 0 ? data.review : undefined,
+			difficulty         : parseInt(data.difficulty),
+			workload           : data.workload.value,
+			details            : {
+				//grade        : data.grade.value,
+				//recommend    : data.recommend === 'true' ? true : false,
+				//attendance   : data.attendance,
+				iClicker     : data.iclicker,
+				groupWork    : data.groupWork,
+				textbook     : data.textbook,
+				heavyReading : data.heavyReading,
+				curve        : data.curve
+			},
+			professor          : data.professor
+				? data.professor.value
+				: undefined,
+			course             : courseId,
+			professorLastName  : data.lastName,
+			professorFirstName : data.firstName
+		};
+
+		if (data.grade) payload.grade = data.grade.value;
+		if (data.recommend) payload.recommend = data.recommend;
+		if (data.attendance) payload.attendance = data.attendance;
+
+		console.log(payload);
+		await courseReviewsAPI.post('/api/reviews', payload);
 	};
 
 	const handleAddProfClick = (e) => {
