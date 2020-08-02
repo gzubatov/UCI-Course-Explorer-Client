@@ -7,11 +7,13 @@ import LoadingSpinner from '../UIElements/LoadingSpinner';
 import CourseInfo from '../Courses/CourseInfo';
 import ReviewForm from '../Forms/ReviewForm';
 import { CourseContext } from '../../context/course-context';
+import Backdrop from '../UIElements/Backdrop';
 
 const AddReviewPage = () => {
 	const courseContext = useContext(CourseContext);
 	const [ course, setCourse ] = useState(courseContext.course);
 	const [ options, setOptions ] = useState(courseContext.professors);
+	const [ isSendingData, setIsSendingData ] = useState(false);
 	const courseId = useParams().cid;
 	const history = useHistory();
 
@@ -43,7 +45,7 @@ const AddReviewPage = () => {
 	);
 
 	const formHandler = async (data) => {
-		console.log(data);
+		setIsSendingData(true);
 		const payload = {
 			quarter            : data.quarter.value,
 			year               : parseInt(data.year.value),
@@ -73,20 +75,21 @@ const AddReviewPage = () => {
 		if (data.recommend) payload.recommend = data.recommend;
 		if (data.attendance) payload.attendance = data.attendance;
 
-		console.log(payload);
 		const response = await courseReviewsAPI.post('/api/reviews', payload);
 
 		if (response.status === 201) {
+			setIsSendingData(false);
 			history.push('/');
 		}
 	};
 
 	return (
 		<React.Fragment>
-			{!course && (
-				<div className="w-full mt-20 flex justify-center items-center">
+			{(!course || isSendingData) && (
+				<React.Fragment>
+					<Backdrop />
 					<LoadingSpinner message="Loading..." />
-				</div>
+				</React.Fragment>
 			)}
 			{course && (
 				<div className="overflow-hidden">

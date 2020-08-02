@@ -36,7 +36,7 @@ const App = () => {
 						</div>
 					</Route>
 					<Route path="/course/:cid/review" exact>
-						<div className="flex">
+						<div className="">
 							<AddReviewPage />
 						</div>
 					</Route>
