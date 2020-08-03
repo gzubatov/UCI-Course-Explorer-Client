@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import CourseListItem from './CourseListItem';
+import RowSizeSelector from '../UIElements/RowSizeSelector';
 
 const CourseList = (props) => {
 	const [ sortAsc, setSortAsc ] = useState(true);
@@ -46,6 +47,10 @@ const CourseList = (props) => {
 
 	return (
 		<div className="w-1/2 m-auto mb-4">
+			<RowSizeSelector
+				onRowChange={props.onRowChange}
+				selectOptions={[ 5, 10, 25, 50 ]}
+			/>
 			<div className="flex mb-2 text-center font-bold">
 				<div
 					className="w-2/5 text-left"

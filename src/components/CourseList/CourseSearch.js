@@ -50,7 +50,10 @@ const CourseSearch = () => {
 			{!loadedCourses && <LoadingSpinner message="Loading..." />}
 			{loadedCourses && (
 				<div className="container mt-4 mx-auto">
-					<CourseList courses={slicedData} />
+					<CourseList
+						courses={slicedData}
+						onRowChange={handleRowSelectionChange}
+					/>
 					<ReactPaginate
 						previousLabel={'<'}
 						nextLabel={'>'}
