@@ -32,6 +32,7 @@ const Input = (props) => {
 					value={value}
 					onFocus={props.onFocus}
 					onBlur={props.onBlur}
+					isClearable={props.isClearable}
 				/>
 			);
 			break;

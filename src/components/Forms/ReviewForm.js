@@ -51,8 +51,6 @@ const ReviewForm = (props) => {
 	const [ addProfessor, setAddProfessor ] = useState(false);
 	const [ professorOptions, setProfessorOptions ] = useState([]);
 	const { register, handleSubmit, control, errors } = useForm();
-	const history = useHistory();
-	const courseId = useParams().cid;
 
 	useEffect(() => {
 		const fetchProfessors = async () => {
@@ -67,45 +65,6 @@ const ReviewForm = (props) => {
 		};
 		fetchProfessors();
 	}, []);
-
-	// const formHandler = async (data) => {
-	// 	console.log(data);
-	// 	const payload = {
-	// 		quarter            : data.quarter.value,
-	// 		year               : parseInt(data.year.value),
-	// 		review             :
-	// 			data.review.length > 0 ? data.review : undefined,
-	// 		difficulty         : parseInt(data.difficulty),
-	// 		workload           : data.workload.value,
-	// 		details            : {
-	// 			//grade        : data.grade.value,
-	// 			//recommend    : data.recommend === 'true' ? true : false,
-	// 			//attendance   : data.attendance,
-	// 			iClicker     : data.iclicker,
-	// 			groupWork    : data.groupWork,
-	// 			textbook     : data.textbook,
-	// 			heavyReading : data.heavyReading,
-	// 			curve        : data.curve
-	// 		},
-	// 		professor          : data.professor
-	// 			? data.professor.value
-	// 			: undefined,
-	// 		course             : courseId,
-	// 		professorLastName  : data.lastName,
-	// 		professorFirstName : data.firstName
-	// 	};
-
-	// 	if (data.grade) payload.grade = data.grade.value;
-	// 	if (data.recommend) payload.recommend = data.recommend;
-	// 	if (data.attendance) payload.attendance = data.attendance;
-
-	// 	console.log(payload);
-	// 	const response = await courseReviewsAPI.post('/api/reviews', payload);
-
-	// 	if (response.status === 201) {
-	// 		history.push('/');
-	// 	}
-	// };
 
 	const handleAddProfClick = (e) => {
 		e.preventDefault();
@@ -141,6 +100,7 @@ const ReviewForm = (props) => {
 							rules={{ required: !addProfessor }}
 							className="sm:w-full md:w-64 lg:w-64 xl:w-64"
 							isDisabled={addProfessor}
+							isClearable
 						/>
 					)}
 					{addProfessor && (

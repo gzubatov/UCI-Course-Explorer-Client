@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import courseReviewsAPI from '../../util/api';
-
 import CourseInfo from './CourseInfo';
 import CourseDataChart from './CourseDataChart';
 import Reviews from '../Reviews/Reviews';
 import Input from '../FormElements/Input';
 import LoadingSpinner from '../UIElements/LoadingSpinner';
+import NoDataDisplay from '../UIElements/NoDataDisplay';
 import { CourseContext } from '../../context/course-context';
+import courseReviewsAPI from '../../util/api';
 
 const OPTIONS = [
 	{ value: 'all', label: 'All' },
@@ -121,136 +121,100 @@ const CoursePage = () => {
 			{course && (
 				<div className="overflow-hidden">
 					<CourseInfo course={course} courseId={courseId} />
-					<div className="max-w-sm ml-4 mr-4">
-						<Input
-							element="select"
-							id="professor"
-							label="Filter by Professor"
-							options={options}
-							onInput={setFilter}
-							defaultValue={filter}
-							value={filter}
-						/>
-					</div>
-					<div className="flex flex-wrap m-4">
-						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
-							<CourseDataChart
-								data={difficultyData}
-								// bgColors={[
-								// 	'#a6dcff',
-								// 	'#7fb2da',
-								// 	'#5c89b5',
-								// 	'#3b6291',
-								// 	'#1b3d6d'
-								// ]}
-								// bgColorsHover={[
-								// 	'#a6dcff',
-								// 	'#7fb2da',
-								// 	'#5c89b5',
-								// 	'#3b6291',
-								// 	'#1b3d6d'
-								// ]}
-								// bgColors={[
-								// 	'#0064a4',
-								// 	'#4d908c',
-								// 	'#ffd200',
-								// 	'#ffb100',
-								// 	'#ff0000'
-								// ]}
-								bgColors={[
-									//'#44bd32',
-									'#009432',
-									'#4cd137',
-									'#ffd32a',
-									'#ffa801',
-									'#ff3f34'
-								]}
-								// bgColorsHover={[
-								// 	'#a6dcff',
-								// 	'#7fb2da',
-								// 	'#5c89b5',
-								// 	'#3b6291',
-								// 	'#1b3d6d'
-								// ]}
-								labels={[
-									'Easy A',
-									'Mostly easy',
-									'Kinda hard',
-									'Very challenging',
-									'Prepare to be wrecked'
-								]}
-								options={{
-									title      : {
-										display   : true,
-										text      : 'Difficulty Scores',
-										fontSize  : 20,
-										position  : 'top',
-										fontColor : 'black'
-									},
-									legend     : {
-										display  : true,
-										position : 'left',
-										labels   : {
-											fontColor : 'black',
-											fontSize  : 16
-										}
-									},
-									responsive : true
-								}}
-							/>
-						</div>
-						<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
-							<CourseDataChart
-								data={workloadData}
-								// bgColors={[
-								// 	'#7fb2da',
-								// 	'#5c89b5',
-								// 	'#3b6291',
-								// 	'#1b3d6d'
-								// ]}
-								bgColors={[
-									//'#44bd32',
-									'#4cd137',
-									'#ffd32a',
-									'#ffa801',
-									'#ff3f34'
-								]}
-								bgColorsHover={[
-									'#7fb2da',
-									'#5c89b5',
-									'#3b6291',
-									'#1b3d6d'
-								]}
-								labels={[
-									'0-5 hours',
-									'6-12 hours',
-									'13-18 hours',
-									'18+ hours'
-								]}
-								options={{
-									title      : {
-										display   : true,
-										text      : 'Workload (hrs/week)',
-										fontSize  : 20,
-										fontColor : 'black'
-									},
-									legend     : {
-										display  : true,
-										position :
-											windowWidth < 768
-												? 'left'
-												: 'right',
-										labels   : {
-											fontColor : 'black',
-											fontSize  : 16
-										}
-									},
-									responsive : true
-								}}
-							/>
-						</div>
-					</div>
-					<Reviews reviews={reviews} />
+					{course.reviews.length === 0 && <NoDataDisplay />}
+					{course.reviews.length > 0 && (
+						<React.Fragment>
+							<div className="max-w-sm ml-4 mr-4">
+								<Input
+									element="select"
+									id="professor"
+									label="Filter by Professor"
+									options={options}
+									onInput={setFilter}
+									defaultValue={filter}
+									value={filter}
+								/>
+							</div>
+							<div className="flex flex-wrap m-4">
+								<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
+									<CourseDataChart
+										data={difficultyData}
+										bgColors={[
+											'#009432',
+											'#4cd137',
+											'#ffd32a',
+											'#ffa801',
+											'#ff3f34'
+										]}
+										labels={[
+											'Easy A',
+											'Mostly easy',
+											'Kinda hard',
+											'Very challenging',
+											'Prepare to be wrecked'
+										]}
+										options={{
+											title      : {
+												display   : true,
+												text      : 'Difficulty Scores',
+												fontSize  : 20,
+												position  : 'top',
+												fontColor : 'black'
+											},
+											legend     : {
+												display  : true,
+												position : 'left',
+												labels   : {
+													fontColor : 'black',
+													fontSize  : 16
+												}
+											},
+											responsive : true
+										}}
+									/>
+								</div>
+								<div className="flex-auto w-screen sm:w-100 md:w-1/2 lg:w-1/2 xl:w-1/2">
+									<CourseDataChart
+										data={workloadData}
+										bgColors={[
+											'#4cd137',
+											'#ffd32a',
+											'#ffa801',
+											'#ff3f34'
+										]}
+										labels={[
+											'0-5 hours',
+											'6-12 hours',
+											'13-18 hours',
+											'18+ hours'
+										]}
+										options={{
+											title      : {
+												display   : true,
+												text      :
+													'Workload (hrs/week)',
+												fontSize  : 20,
+												fontColor : 'black'
+											},
+											legend     : {
+												display  : true,
+												position :
+													windowWidth < 768
+														? 'left'
+														: 'right',
+												labels   : {
+													fontColor : 'black',
+													fontSize  : 16
+												}
+											},
+											responsive : true
+										}}
+									/>
+								</div>
+							</div>
+							<Reviews reviews={reviews} />
+						</React.Fragment>
+					)}
 				</div>
 			)}
 		</React.Fragment>

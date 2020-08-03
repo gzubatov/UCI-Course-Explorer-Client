@@ -14347,6 +14347,10 @@ video {
   --UCI-GOLD: #ffd200;
 }
 
+body {
+  background-color: #fdfdfd;
+}
+
 /* HeaderNav */
 
 .__header-nav {
@@ -14437,6 +14441,26 @@ video {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Pagination */
+
+.pagination {
+  display: inline-block;
+}
+
+.paginate__active {
+  background-color: #bee3f8;
+}
+
+#react-paginate ul {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#react-paginate li {
+  display: inline-block;
 }
 
 @media (min-width: 640px) {
