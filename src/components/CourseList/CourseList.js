@@ -45,7 +45,7 @@ const CourseList = (props) => {
 	});
 
 	return (
-		<div className="w-1/2">
+		<div className="w-1/2 m-auto mb-4">
 			<div className="flex mb-2 text-center font-bold">
 				<div
 					className="w-2/5 text-left"

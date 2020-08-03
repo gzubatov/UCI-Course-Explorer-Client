@@ -5,8 +5,8 @@ import Input from './FormElements/Input';
 import ErrorBanner from './UIElements/ErrorBanner';
 
 const OPTIONS = [
-	{ value: 'compsci', label: 'COMP SCI' },
-	{ value: 'inf', label: 'IN4MATX' },
+	{ value: 'compsci', label: 'COMPSCI' },
+	{ value: 'in4matx', label: 'IN4MATX' },
 	{ value: 'cgs', label: 'Computer Game Science' }
 ];
 

@@ -1,18 +1,19 @@
 import React from 'react';
 
-const CourseInfoDetail = ({ label, value }) => {
-	let printedValue = '';
-	if (typeof value === 'boolean') {
-		printedValue = value ? 'Yes' : 'No';
-	}
-	else {
-		printedValue = value;
-	}
+import { mapDetailToLabel } from '../../util/details-mapper';
 
+const CourseInfoDetail = ({ label, value }) => {
 	return (
-		<div className="mr-4 mb-4 w-auto">
-			<span className="font-bold pr-2">{label}</span> {printedValue}
-		</div>
+		<React.Fragment>
+			{value && (
+				<div className="mr-4 mb-4 w-auto">
+					<span className="font-bold pr-2 flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold text-white mr-3">
+						{mapDetailToLabel(label)}
+					</span>
+				</div>
+			)}
+			{!value && <React.Fragment />}
+		</React.Fragment>
 	);
 };
 
