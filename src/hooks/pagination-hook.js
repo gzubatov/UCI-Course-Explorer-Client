@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export const usePagination = (initialRowCount, data) => {
 	const [ rowCount, setRowCount ] = useState(initialRowCount);
@@ -16,23 +16,19 @@ export const usePagination = (initialRowCount, data) => {
 		[ data, rowCount ]
 	);
 
-	const handlePageClick = ({ selected }) => {
-		const offset = Math.ceil((selected + 1) * rowCount);
-		const start = selected * rowCount;
-		const slice = data ? data.slice(start, offset) : [];
-		setSlicedData(slice);
-	};
+	const handlePageClick = useCallback(
+		({ selected }) => {
+			const offset = Math.ceil((selected + 1) * rowCount);
+			const start = selected * rowCount;
+			const slice = data ? data.slice(start, offset) : [];
+			setSlicedData(slice);
+		},
+		[ data, rowCount ]
+	);
 
-	const handleRowSelectionChange = (e) => {
+	const handleRowSelectionChange = useCallback((e) => {
 		setRowCount(e.target.value);
-	};
+	}, []);
 
-	return [
-		slicedData,
-		pageCount,
-		setRowCount,
-		setPageCount,
-		handlePageClick,
-		handleRowSelectionChange
-	];
+	return [ slicedData, pageCount, handlePageClick, handleRowSelectionChange ];
 };

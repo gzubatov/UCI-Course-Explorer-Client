@@ -14,7 +14,7 @@ const ReviewList = (props) => {
 			details={review.details}
 		/>
 	));
-	return <React.Fragment>{reviews}</React.Fragment>;
+	return <div className="mt-2">{reviews}</div>;
 };
 
 export default ReviewList;

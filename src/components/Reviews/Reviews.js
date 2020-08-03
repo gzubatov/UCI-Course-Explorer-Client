@@ -3,6 +3,8 @@ import ReactPaginate from 'react-paginate';
 import Select from 'react-select';
 
 import ReviewList from './ReviewList';
+import RowSizeSelector from '../UIElements/RowSizeSelector';
+import { usePagination } from '../../hooks/pagination-hook';
 
 const rowOptions = [
 	{ value: 5, label: '5' },
@@ -11,55 +13,23 @@ const rowOptions = [
 ];
 
 const Reviews = (props) => {
-	const [ rowCount, setRowCount ] = useState(5);
-	const [ pageCount, setPageCount ] = useState(0);
-	const [ slicedReviews, setSlicedReviews ] = useState([]);
-
-	useEffect(
-		() => {
-			if (props.reviews) {
-				setPageCount(Math.ceil(props.reviews.length / rowCount));
-				const slice = props.reviews.slice(0, rowCount);
-				setSlicedReviews(slice);
-			}
-		},
-		[ props.reviews, rowCount ]
-	);
-
-	const handlePageClick = (data) => {
-		console.log(data);
-		const selected = data.selected;
-		const offset = Math.ceil((selected + 1) * rowCount);
-
-		const start = selected * rowCount;
-
-		const slice = props.reviews ? props.reviews.slice(start, offset) : [];
-		setSlicedReviews(slice);
-	};
-
-	const handleRowSelectionChange = (e) => {
-		setRowCount(e.target.value);
-	};
+	const [
+		slicedData,
+		pageCount,
+		handlePageClick,
+		handleRowSelectionChange
+	] = usePagination(5, props.reviews || []);
 
 	return (
 		<div className="container mt-4 mx-auto">
 			<div className="flex justify-between">
 				<h3 className="font-bold text-xl">Student Tips:</h3>
-				<div className="inline-block">
-					<h4 className="text-l inline-block mr-2">Show</h4>{' '}
-					{/* <Select options={rowOptions} defaultValue={rowOptions[0]} /> */}
-					<select
-						onChange={handleRowSelectionChange}
-						className="inline-block border border-solid border-black  mr-2"
-					>
-						<option value={5}>5</option>
-						<option value={10}>10</option>
-						<option value={25}>25</option>
-					</select>
-					<h4 className="text-l inline-block">Entries</h4>
-				</div>
+				<RowSizeSelector
+					onRowChange={handleRowSelectionChange}
+					selectOptions={[ 5, 10, 25 ]}
+				/>
 			</div>
-			{props.reviews && <ReviewList reviews={slicedReviews} />}
+			{props.reviews && <ReviewList reviews={slicedData} />}
 			<ReactPaginate
 				previousLabel={'<'}
 				nextLabel={'>'}

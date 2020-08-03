@@ -15,8 +15,6 @@ const CourseSearch = () => {
 	const [
 		slicedData,
 		pageCount,
-		setRowCount,
-		setPageCount,
 		handlePageClick,
 		handleRowSelectionChange
 	] = usePagination(5, loadedCourses);
@@ -49,7 +47,7 @@ const CourseSearch = () => {
 		<React.Fragment>
 			{!loadedCourses && <LoadingSpinner message="Loading..." />}
 			{loadedCourses && (
-				<div className="container mt-4 mx-auto">
+				<div className="container mx-auto">
 					<CourseList
 						courses={slicedData}
 						onRowChange={handleRowSelectionChange}
