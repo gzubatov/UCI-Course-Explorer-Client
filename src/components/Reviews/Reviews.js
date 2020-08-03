@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactPaginate from 'react-paginate';
-import Select from 'react-select';
 
 import ReviewList from './ReviewList';
 import RowSizeSelector from '../UIElements/RowSizeSelector';
 import { usePagination } from '../../hooks/pagination-hook';
-
-const rowOptions = [
-	{ value: 5, label: '5' },
-	{ value: 10, label: '10' },
-	{ value: 25, label: '25' }
-];
 
 const Reviews = (props) => {
 	const [

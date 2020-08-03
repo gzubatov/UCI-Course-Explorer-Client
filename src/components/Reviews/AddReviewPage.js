@@ -54,9 +54,6 @@ const AddReviewPage = () => {
 			difficulty         : parseInt(data.difficulty),
 			workload           : data.workload.value,
 			details            : {
-				//grade        : data.grade.value,
-				//recommend    : data.recommend === 'true' ? true : false,
-				//attendance   : data.attendance,
 				iClicker     : data.iclicker,
 				groupWork    : data.groupWork,
 				textbook     : data.textbook,

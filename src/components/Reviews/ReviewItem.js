@@ -36,7 +36,9 @@ const ReviewItem = (props) => {
 			<ul className="flex flex-wrap mt-2 px-6">{reviewDetails}</ul>
 
 			<div className="px-6 py-4">
-				<p className="text-black text-base">{props.review}</p>
+				<p className="text-black text-base whitespace-pre-line">
+					{props.review}
+				</p>
 			</div>
 			<div className="flex flex-wrap px-6 py-4">
 				<span className=" bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
