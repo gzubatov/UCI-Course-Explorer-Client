@@ -8,12 +8,15 @@ import CourseInfo from '../Courses/CourseInfo';
 import ReviewForm from '../Forms/ReviewForm';
 import { CourseContext } from '../../context/course-context';
 import Backdrop from '../UIElements/Backdrop';
+import Modal from '../UIElements/Modal';
 
 const AddReviewPage = () => {
 	const courseContext = useContext(CourseContext);
 	const [ course, setCourse ] = useState(courseContext.course);
 	const [ options, setOptions ] = useState(courseContext.professors);
 	const [ isSendingData, setIsSendingData ] = useState(false);
+	const [ showModal, setShowModal ] = useState(false);
+	const [ error, setError ] = useState();
 	const courseId = useParams().cid;
 	const history = useHistory();
 
@@ -72,12 +75,31 @@ const AddReviewPage = () => {
 		if (data.recommend) payload.recommend = data.recommend;
 		if (data.attendance) payload.attendance = data.attendance;
 
-		const response = await courseReviewsAPI.post('/api/reviews', payload);
-
-		if (response.status === 201) {
+		let response;
+		try {
+			response = await courseReviewsAPI.post('/api/reviews', payload);
 			setIsSendingData(false);
-			history.push('/');
+			if (response.status === 201) {
+				setShowModal(true);
+				setError(null);
+			}
+		} catch (e) {
+			if (e.response.status === 400) {
+				setIsSendingData(false);
+				setShowModal(true);
+				setError(e.response.data);
+			}
 		}
+	};
+
+	const handleModalError = (e) => {
+		e.preventDefault();
+		setShowModal(false);
+	};
+
+	const handleModalSuccess = (e) => {
+		e.preventDefault();
+		history.push('/');
 	};
 
 	return (
@@ -88,6 +110,29 @@ const AddReviewPage = () => {
 					<LoadingSpinner message="Loading..." />
 				</React.Fragment>
 			)}
+
+			<Modal
+				show={showModal}
+				onClick={() => setShowModal(false)}
+				header={error ? 'An Error Occurred!' : 'Success!'}
+				message={
+					error ? (
+						error.message
+					) : (
+						'Thank you for submitting your review!'
+					)
+				}
+				footer={
+					<button
+						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+						type="submit"
+					>
+						Close
+					</button>
+				}
+				onSubmit={error ? handleModalError : handleModalSuccess}
+			/>
+
 			{course && (
 				<div className="overflow-hidden">
 					<CourseInfo course={course} />

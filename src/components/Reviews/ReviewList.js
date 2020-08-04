@@ -2,7 +2,6 @@ import React from 'react';
 import ReviewItem from './ReviewItem';
 
 const ReviewList = (props) => {
-	console.log(props);
 	const reviews = props.reviews.map((review) => {
 		if (review.review !== undefined && review.review.trim().length > 0) {
 			return (
