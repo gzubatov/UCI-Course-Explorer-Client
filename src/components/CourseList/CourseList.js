@@ -1,10 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import CourseListItem from './CourseListItem';
 import RowSizeSelector from '../UIElements/RowSizeSelector';
 
 const CourseList = (props) => {
-	const courseItems = props.courses.map((course) => {
+	const [ sortAsc, setSortAsc ] = useState(true);
+	const [ data, setData ] = useState([]);
+
+	useEffect(
+		() => {
+			setData(props.courses);
+		},
+		[ props.courses ]
+	);
+
+	const sortListAsc = useCallback(
+		() => {
+			const temp = [ ...data ].sort(
+				(a, b) => (a.course < b.course ? -1 : 1)
+			);
+			return temp;
+		},
+		[ data ]
+	);
+
+	const sortListDesc = useCallback(
+		() => {
+			const temp = [ ...data ].sort(
+				(a, b) => (a.course < b.course ? 1 : -1)
+			);
+			return temp;
+		},
+		[ data ]
+	);
+
+	const courseData = useMemo(
+		() => {
+			if (sortAsc) {
+				return sortListAsc();
+			}
+			else {
+				return sortListDesc();
+			}
+		},
+		[ sortAsc, sortListAsc, sortListDesc ]
+	);
+
+	const courseItems = courseData.map((course) => {
 		return (
 			<CourseListItem
 				key={course._id}
@@ -23,8 +65,14 @@ const CourseList = (props) => {
 				onRowChange={props.onRowChange}
 				selectOptions={[ 5, 10, 25, 50 ]}
 			/>
-			<div className="flex justify-between mt-2 mb-2 text-center font-bold">
-				<div className="w-2/5 text-left">Course</div>
+
+			<div className="flex justify-around mt-2 mb-2 text-center font-bold">
+				<div
+					className="w-2/5 text-left"
+					onClick={() => setSortAsc((prev) => !prev)}
+				>
+					Course
+				</div>
 				<div className="text-left">Difficulty Rating</div>
 				<div className="text-right">Workload Rating</div>
 			</div>
