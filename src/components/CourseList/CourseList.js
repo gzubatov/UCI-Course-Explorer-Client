@@ -1,37 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 
 import CourseListItem from './CourseListItem';
 import RowSizeSelector from '../UIElements/RowSizeSelector';
 
 const CourseList = (props) => {
-	const [ sortAsc, setSortAsc ] = useState(true);
-
-	const sortListAsc = useCallback(
-		() => {
-			props.courses.sort((a, b) => (a.course < b.course ? 1 : -1));
-		},
-		[ props ]
-	);
-
-	const sortListDesc = useCallback(
-		() => {
-			props.courses.sort((a, b) => (a.course < b.course ? -1 : 1));
-		},
-		[ props ]
-	);
-
-	useEffect(
-		() => {
-			if (sortAsc) {
-				sortListAsc();
-			}
-			else {
-				sortListDesc();
-			}
-		},
-		[ sortAsc, sortListAsc, sortListDesc ]
-	);
-
 	const courseItems = props.courses.map((course) => {
 		return (
 			<CourseListItem
@@ -39,27 +11,22 @@ const CourseList = (props) => {
 				id={course._id}
 				department={course.department}
 				course={course.courseNumber}
-				professor={course.professor}
-				rating={course.avgRatings.avgDifficulty}
+				difficulty={course.avgRatings.avgDifficulty}
+				workload={course.avgRatings.avgWorkload}
 			/>
 		);
 	});
 
 	return (
-		<div className="w-1/2 m-auto mb-4">
+		<div className="w-screen sm:w-screen md:w-1/2 lg:w-1/2 xl:w-1/2 m-auto mb-4">
 			<RowSizeSelector
 				onRowChange={props.onRowChange}
 				selectOptions={[ 5, 10, 25, 50 ]}
 			/>
-			<div className="flex mb-2 text-center font-bold">
-				<div
-					className="w-2/5 text-left"
-					onClick={() => setSortAsc((prev) => !prev)}
-				>
-					Course
-				</div>
-				<div className="w-2/5 text-left">Professor</div>
-				<div className="w-1/5 text-right">Difficulty Rating</div>
+			<div className="flex justify-between mt-2 mb-2 text-center font-bold">
+				<div className="w-2/5 text-left">Course</div>
+				<div className="text-left">Difficulty Rating</div>
+				<div className="text-right">Workload Rating</div>
 			</div>
 			<div className="container w-full">{courseItems}</div>
 		</div>

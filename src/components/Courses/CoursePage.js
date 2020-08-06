@@ -121,7 +121,12 @@ const CoursePage = () => {
 			{course && (
 				<div className="overflow-hidden">
 					<CourseInfo course={course} courseId={courseId} />
-					{course.reviews.length === 0 && <NoDataDisplay />}
+					{course.reviews.length === 0 && (
+						<NoDataDisplay
+							message="Sorry there is no data for this course yet!"
+							showFace
+						/>
+					)}
 					{course.reviews.length > 0 && (
 						<React.Fragment>
 							<div className="max-w-sm ml-4 mr-4">

@@ -11,6 +11,7 @@ import { usePagination } from '../../hooks/pagination-hook';
 const CourseSearch = () => {
 	const { department, course } = useParams();
 	const [ loadedCourses, setLoadedCourses ] = useState();
+	const [ isLoading, setIsLoading ] = useState(false);
 
 	const [
 		slicedData,
@@ -22,6 +23,7 @@ const CourseSearch = () => {
 	useEffect(
 		() => {
 			const fetchCourses = async () => {
+				setIsLoading(true);
 				let results;
 				if (!course) {
 					const response = await courseReviewsAPI.get(
@@ -35,8 +37,8 @@ const CourseSearch = () => {
 					);
 					results = response.data.course;
 				}
-				console.log(results);
 				setLoadedCourses(results);
+				setIsLoading(false);
 			};
 			fetchCourses();
 		},
@@ -45,7 +47,7 @@ const CourseSearch = () => {
 
 	return (
 		<React.Fragment>
-			{!loadedCourses && <LoadingSpinner message="Loading..." />}
+			{isLoading && <LoadingSpinner message="Loading..." />}
 			{loadedCourses && (
 				<div className="container mx-auto">
 					<CourseList

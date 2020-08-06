@@ -11,13 +11,24 @@ const CourseListItem = (props) => {
 	return (
 		<Link to={`/course/${props.id}`} className="flex-1">
 			<div
-				className={`flex items-center mb-2 rounded overflow-hidden shadow-lg border-2 border-${border_color}-600`}
+				className={`flex h-12 justify-between items-center mb-2 rounded overflow-hidden shadow-lg border-2 border-${border_color}-600 border-blue-500`}
 			>
-				<div className="w-1/3 h-12 text-left px-4 py-2 m-2">{`${props.department} ${props.course}`}</div>
-				<div className="w-1/3 h-12 text-left px-4 py-2 m-2">{`${props.professor}`}</div>
-				<div className="w-1/3 h-12 text-right px-4 py-2 m-2">{`${props.rating.toFixed(
-					1
-				)}`}</div>
+				<div className="flex-1 text-left px-4 py-2 m-2 font-mono">{`${props.department} ${props.course}`}</div>
+				{props.difficulty !== 0 && (
+					<React.Fragment>
+						<div className="w-1/4 text-center px-4 py-2 m-2 font-mono">{`${props.difficulty.toFixed(
+							1
+						)}`}</div>
+						<div className="w-1/4 text-center px-4 py-2 m-2 font-mono">{`${props.workload.toFixed(
+							1
+						)}`}</div>
+					</React.Fragment>
+				)}
+				{props.difficulty === 0 && (
+					<div className="w-1/2 h-12 text-right px-4 py-2 m-2 mr-32 font-mono">
+						No Data
+					</div>
+				)}
 			</div>
 		</Link>
 	);

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReviewItem from './ReviewItem';
+import NoDataDisplay from '../UIElements/NoDataDisplay';
 
 const ReviewList = (props) => {
-	const reviews = props.reviews.map((review) => {
+	let reviews = props.reviews.map((review) => {
 		if (review.review !== undefined && review.review.trim().length > 0) {
 			return (
 				<ReviewItem
@@ -16,8 +17,24 @@ const ReviewList = (props) => {
 				/>
 			);
 		}
+		else {
+			return undefined;
+		}
 	});
-	return <div className="mt-2">{reviews}</div>;
+
+	reviews = reviews.filter((el) => el !== undefined);
+
+	return (
+		<React.Fragment>
+			{reviews.length > 0 && <div className="mt-2">{reviews}</div>}
+			{reviews.length === 0 && (
+				<NoDataDisplay
+					message="There are no student tips for this professor-course combo"
+					classNames="w-screen sm:w-screen md:w-1/2 lg:w-3/5 xl:w-3/5 "
+				/>
+			)}
+		</React.Fragment>
+	);
 };
 
 export default ReviewList;

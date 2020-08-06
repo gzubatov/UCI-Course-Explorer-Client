@@ -15,6 +15,7 @@ body {
 /* HeaderNav */
 .__header-nav {
 	background-color: var(--UCI-BLUE);
+	color: var(--UCI-GOLD);
 }
 
 /* Backdrop */
