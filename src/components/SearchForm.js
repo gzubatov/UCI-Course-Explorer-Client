@@ -3,12 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Input from './FormElements/Input';
 import ErrorBanner from './UIElements/ErrorBanner';
-
-const OPTIONS = [
-	{ value: 'compsci', label: 'COMPSCI' },
-	{ value: 'in4matx', label: 'IN4MATX' },
-	{ value: 'cgs', label: 'Computer Game Science' }
-];
+import { courseSearchOptions } from '../util/course-options';
 
 const SearchForm = () => {
 	const [ department, setDepartment ] = useState();
@@ -43,7 +38,7 @@ const SearchForm = () => {
 							element="select"
 							id="departments"
 							label="Departments"
-							options={OPTIONS}
+							options={courseSearchOptions}
 							onInput={setDepartment}
 							onFocus={() => setIsTouched(true)}
 							onBlur={() => setIsFocused(true)}
