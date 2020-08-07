@@ -20,8 +20,8 @@ const CourseList = (props) => {
 			const temp = [ ...data ].sort(
 				//(a, b) => (a.course < b.course ? -1 : 1)
 				(a, b) => {
-					if (sort.field === 'course') {
-						return a[sort.field] - b[sort.field];
+					if (sort.field === 'courseNumber') {
+						return a.courseNumber < b.courseNumber ? -1 : 1;
 					}
 					else {
 						return (
@@ -42,7 +42,7 @@ const CourseList = (props) => {
 				//(a, b) => (a.course < b.course ? 1 : -1)
 				(a, b) => {
 					if (sort.field === 'courseNumber') {
-						return b[sort.field] - a[sort.field];
+						return a.courseNumber < b.courseNumber ? 1 : -1;
 					}
 					else {
 						return (
