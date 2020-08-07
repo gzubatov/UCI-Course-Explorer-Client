@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import courseReviewsAPI from '../../util/api';
 
@@ -82,6 +83,10 @@ const AddReviewPage = () => {
 			if (response.status === 201) {
 				setShowModal(true);
 				setError(null);
+				ReactGA.event({
+					category : 'Review',
+					action   : 'Review added'
+				});
 			}
 		} catch (e) {
 			if (e.response.status === 400) {
