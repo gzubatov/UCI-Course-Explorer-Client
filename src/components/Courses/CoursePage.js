@@ -113,7 +113,7 @@ const CoursePage = () => {
 				</div>
 			)}
 			{course && (
-				<div className="overflow-hidden">
+				<div className="overflow-hidden min-w-full">
 					<CourseInfo course={course} courseId={courseId} />
 					{course.reviews.length === 0 && (
 						<NoDataDisplay
