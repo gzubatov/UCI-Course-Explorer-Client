@@ -72,9 +72,9 @@ const AddReviewPage = () => {
 			professorFirstName : data.firstName
 		};
 
-		if (data.grade) payload.grade = data.grade.value;
-		if (data.recommend) payload.recommend = data.recommend;
-		if (data.attendance) payload.attendance = data.attendance;
+		if (data.grade) payload.details.grade = data.grade.value;
+		if (data.recommend) payload.details.recommend = data.recommend;
+		if (data.attendance) payload.details.attendance = data.attendance;
 
 		let response;
 		try {

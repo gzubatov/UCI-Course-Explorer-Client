@@ -30,7 +30,12 @@ const ReviewItem = (props) => {
 	const reviewDetails = [];
 	if (props) {
 		for (const [ key, value ] of Object.entries(props.details)) {
-			if (key !== 'grade' && key !== 'recommend') {
+			console.log(props.details);
+			if (
+				key !== 'grade' &&
+				key !== 'recommend' &&
+				key !== 'attendance'
+			) {
 				reviewDetails.push(
 					<li key={key}>
 						<CourseInfoDetail label={key} value={value} />
@@ -68,6 +73,12 @@ const ReviewItem = (props) => {
 					<ReviewInfoDetail
 						label="Recommend class"
 						value={props.recommend ? 'Yes' : 'No'}
+					/>
+				)}
+				{props.details.attendance !== undefined && (
+					<ReviewInfoDetail
+						label="Attendance"
+						value={props.details.attendance}
 					/>
 				)}
 			</div>
