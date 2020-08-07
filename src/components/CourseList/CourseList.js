@@ -11,6 +11,7 @@ const CourseList = (props) => {
 	useEffect(
 		() => {
 			setData(props.courses);
+			console.log(props.courses);
 		},
 		[ props.courses ]
 	);
@@ -19,9 +20,15 @@ const CourseList = (props) => {
 		() => {
 			const temp = [ ...data ].sort(
 				//(a, b) => (a.course < b.course ? -1 : 1)
+				// a.courseNumber.localeCompare(b.courseNumber)
+				// a.courseNumber < b.courseNumber ? -1 : 1;
 				(a, b) => {
 					if (sort.field === 'courseNumber') {
-						return a.courseNumber < b.courseNumber ? -1 : 1;
+						return a.courseNumber.localeCompare(
+							b.courseNumber,
+							undefined,
+							{ numeric: true }
+						);
 					}
 					else {
 						return (
@@ -40,9 +47,15 @@ const CourseList = (props) => {
 		() => {
 			const temp = [ ...data ].sort(
 				//(a, b) => (a.course < b.course ? 1 : -1)
+				// b.courseNumber.localeCompare(a.courseNumber)
+				// a.courseNumber < b.courseNumber ? 1 : -1;
 				(a, b) => {
 					if (sort.field === 'courseNumber') {
-						return a.courseNumber < b.courseNumber ? 1 : -1;
+						return b.courseNumber.localeCompare(
+							a.courseNumber,
+							undefined,
+							{ numeric: true }
+						);
 					}
 					else {
 						return (
