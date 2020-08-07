@@ -15,7 +15,7 @@ const SearchForm = () => {
 	const formHandler = (e) => {
 		e.preventDefault();
 		if (department && course) {
-			history.push(`/search/${department.value}/${course}`);
+			history.push(`/search/${department.value}/${course.toUpperCase()}`);
 		}
 		else if (department) {
 			history.push(`/search/${department.value}`);

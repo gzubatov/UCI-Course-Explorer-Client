@@ -111,7 +111,7 @@ const CourseList = (props) => {
 
 			<div className="flex justify-around mt-2 mb-2 text-center font-bold">
 				<div
-					className="w-2/5 text-left"
+					className="w-3/5 sm:w-2/5 md:w-2/5 lg:w-2/5 xl:w-2/5 text-left"
 					onClick={() =>
 						setSort((prev) => {
 							return {
