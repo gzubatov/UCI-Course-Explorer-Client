@@ -20,10 +20,10 @@ const SearchForm = () => {
 	const formHandler = (e) => {
 		e.preventDefault();
 		if (department && course) {
-			history.push(`/${department.value}/${course}`);
+			history.push(`/search/${department.value}/${course}`);
 		}
 		else if (department) {
-			history.push(`/${department.value}`);
+			history.push(`/search/${department.value}`);
 		}
 		else {
 			setIsTouched(true);

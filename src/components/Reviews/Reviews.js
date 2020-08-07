@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import ReviewList from './ReviewList';
@@ -6,12 +6,24 @@ import RowSizeSelector from '../UIElements/RowSizeSelector';
 import { usePagination } from '../../hooks/pagination-hook';
 
 const Reviews = (props) => {
+	const [ textReviews, setTextReviews ] = useState(props.reviews);
+	console.log('render Reviews');
+	useEffect(
+		() => {
+			const temp = props.reviews
+				? [ ...props.reviews ].filter((el) => el.review !== undefined)
+				: [];
+			setTextReviews(temp);
+		},
+		[ props.reviews ]
+	);
+
 	const [
 		slicedData,
 		pageCount,
 		handlePageClick,
 		handleRowSelectionChange
-	] = usePagination(5, props.reviews || []);
+	] = usePagination(5, textReviews);
 
 	return (
 		<div className="container mt-4 mx-auto">

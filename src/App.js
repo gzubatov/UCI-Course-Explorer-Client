@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
@@ -50,7 +50,7 @@ const App = () => {
 							<ReviewForm />
 						</div>
 					</Route>
-					<Route path="/:department" exact>
+					<Route path="/search/:department" exact>
 						<div className="flex justify-center">
 							<SearchForm />
 						</div>
@@ -58,7 +58,7 @@ const App = () => {
 							<CourseSearch />
 						</div>
 					</Route>
-					<Route path="/:department/:course" exact>
+					<Route path="/search/:department/:course" exact>
 						<div className="flex justify-center">
 							<SearchForm />
 						</div>
@@ -66,6 +66,7 @@ const App = () => {
 							<CourseSearch />
 						</div>
 					</Route>
+					<Redirect to="/" />
 				</Switch>
 			</BrowserRouter>
 		</CourseContext.Provider>

@@ -10,19 +10,13 @@ import NoDataDisplay from '../UIElements/NoDataDisplay';
 import { CourseContext } from '../../context/course-context';
 import courseReviewsAPI from '../../util/api';
 
-const OPTIONS = [
-	{ value: 'all', label: 'All' },
-	{ value: '5f190b318b79ca76c6529417', label: 'Martins, Alberto' },
-	{ value: '5f1a0973bfaf9b9955d1019a', label: 'Klefstad, Raymond' }
-];
-
 const CoursePage = () => {
 	const courseCtx = useContext(CourseContext);
 	const [ course, setCourse ] = useState();
 	const [ options, setOptions ] = useState([
 		{ value: 'all', label: 'All' }
 	]);
-	const [ filter, setFilter ] = useState(OPTIONS[0]);
+	const [ filter, setFilter ] = useState(options[0]);
 	const [ difficultyData, setDifficultyData ] = useState();
 	const [ workloadData, setWorkloadData ] = useState();
 	const [ reviews, setReviews ] = useState();
@@ -46,7 +40,7 @@ const CoursePage = () => {
 					`/api/courses/id/${courseId}`
 				);
 				const courseData = response.data.course;
-				console.log(response.data.professorOptions);
+				console.log(response.data);
 				const professorOptions = response.data.professorOptions;
 				const profOptionsMapped = professorOptions.map((el) => {
 					return {
