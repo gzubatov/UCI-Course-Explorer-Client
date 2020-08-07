@@ -44,7 +44,7 @@ const App = () => {
 						</div>
 					</Route>
 					<Route path="/course/:cid" exact>
-						<div className="flex">
+						<div className="flex justify-center">
 							<CoursePage />
 						</div>
 					</Route>
