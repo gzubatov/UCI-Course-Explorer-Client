@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Input from './FormElements/Input';
 import ErrorBanner from './UIElements/ErrorBanner';
-import { courseSearchOptions } from '../util/course-options';
+import courseSearchOptions from '../util/course-options';
 
 const SearchForm = () => {
 	const [ department, setDepartment ] = useState();
