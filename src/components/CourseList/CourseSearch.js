@@ -49,7 +49,7 @@ const CourseSearch = () => {
 		<React.Fragment>
 			{isLoading && <LoadingSpinner message="Loading..." />}
 			{loadedCourses && (
-				<div className="container mx-auto">
+				<div className="container overflow-hidden">
 					<CourseList
 						courses={slicedData}
 						onRowChange={handleRowSelectionChange}

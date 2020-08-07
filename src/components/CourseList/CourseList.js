@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import CourseListItem from './CourseListItem';
 import RowSizeSelector from '../UIElements/RowSizeSelector';
+import SortingIcon from '../UIElements/SortingIcon';
 
 const CourseList = (props) => {
-	const [ sortAsc, setSortAsc ] = useState(true);
+	const [ sort, setSort ] = useState({ field: 'courseNumber', order: true });
 	const [ data, setData ] = useState([]);
 
 	useEffect(
@@ -17,33 +18,60 @@ const CourseList = (props) => {
 	const sortListAsc = useCallback(
 		() => {
 			const temp = [ ...data ].sort(
-				(a, b) => (a.course < b.course ? -1 : 1)
+				//(a, b) => (a.course < b.course ? -1 : 1)
+				(a, b) => {
+					if (sort.field === 'course') {
+						return a[sort.field] - b[sort.field];
+					}
+					else {
+						return (
+							a['avgRatings'][sort.field] -
+							b['avgRatings'][sort.field]
+						);
+					}
+				}
 			);
 			return temp;
 		},
-		[ data ]
+		[ data, sort.field ]
 	);
 
 	const sortListDesc = useCallback(
 		() => {
 			const temp = [ ...data ].sort(
-				(a, b) => (a.course < b.course ? 1 : -1)
+				//(a, b) => (a.course < b.course ? 1 : -1)
+				(a, b) => {
+					if (sort.field === 'courseNumber') {
+						return b[sort.field] - a[sort.field];
+					}
+					else {
+						return (
+							b['avgRatings'][sort.field] -
+							a['avgRatings'][sort.field]
+						);
+					}
+				}
 			);
 			return temp;
 		},
-		[ data ]
+		[ data, sort.field ]
 	);
 
 	const courseData = useMemo(
 		() => {
-			if (sortAsc) {
-				return sortListAsc();
+			if (sort.field) {
+				if (sort.order) {
+					return sortListAsc();
+				}
+				else {
+					return sortListDesc();
+				}
 			}
 			else {
-				return sortListDesc();
+				return data;
 			}
 		},
-		[ sortAsc, sortListAsc, sortListDesc ]
+		[ data, sort.field, sort.order, sortListAsc, sortListDesc ]
 	);
 
 	const courseItems = courseData.map((course) => {
@@ -59,6 +87,8 @@ const CourseList = (props) => {
 		);
 	});
 
+	console.log(sort);
+
 	return (
 		<div className="w-screen sm:w-screen md:w-1/2 lg:w-1/2 xl:w-1/2 m-auto mb-4">
 			<RowSizeSelector
@@ -69,12 +99,115 @@ const CourseList = (props) => {
 			<div className="flex justify-around mt-2 mb-2 text-center font-bold">
 				<div
 					className="w-2/5 text-left"
-					onClick={() => setSortAsc((prev) => !prev)}
+					onClick={() =>
+						setSort((prev) => {
+							return {
+								field : 'courseNumber',
+								order : !prev.order
+							};
+						})}
 				>
 					Course
+					{sort.field === 'courseNumber' &&
+					sort.order && (
+						<SortingIcon
+							ascending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field === 'courseNumber' &&
+					!sort.order && (
+						<SortingIcon
+							descending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field !== 'courseNumber' && (
+						<SortingIcon
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
 				</div>
-				<div className="text-left">Difficulty Rating</div>
-				<div className="text-right">Workload Rating</div>
+				<div
+					className="text-left"
+					onClick={() =>
+						setSort((prev) => {
+							return {
+								field : 'avgDifficulty',
+								order : !prev.order
+							};
+						})}
+				>
+					Difficulty Rating
+					{sort.field === 'avgDifficulty' &&
+					sort.order && (
+						<SortingIcon
+							ascending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field === 'avgDifficulty' &&
+					!sort.order && (
+						<SortingIcon
+							descending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field !== 'avgDifficulty' && (
+						<SortingIcon
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+				</div>
+				<div
+					className="text-right"
+					onClick={() =>
+						setSort((prev) => {
+							return {
+								field : 'avgWorkload',
+								order : !prev.order
+							};
+						})}
+				>
+					Workload Rating
+					{sort.field === 'avgWorkload' &&
+					sort.order && (
+						<SortingIcon
+							ascending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field === 'avgWorkload' &&
+					!sort.order && (
+						<SortingIcon
+							descending
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+					{sort.field !== 'avgWorkload' && (
+						<SortingIcon
+							height={20}
+							width={20}
+							classes="inline-block"
+						/>
+					)}
+				</div>
 			</div>
 			<div className="container w-full">{courseItems}</div>
 		</div>
