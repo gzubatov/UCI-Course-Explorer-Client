@@ -25,7 +25,7 @@ const CourseListItem = (props) => {
 					</React.Fragment>
 				)}
 				{props.difficulty === 0 && (
-					<div className="w-1/2 h-12 text-right px-4 py-2 m-2 mr-32 font-mono">
+					<div className="w-1/2 text-right px-4 py-2 m-2 mr-32 font-mono">
 						No Data
 					</div>
 				)}

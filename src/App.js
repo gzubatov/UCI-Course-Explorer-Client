@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import ReactGA from 'react-ga';
 
 import HeaderNav from './components/Navigation/HeaderNav';
 import SearchForm from './components/SearchForm';
@@ -10,7 +12,18 @@ import CoursePage from './components/Courses/CoursePage';
 import AddReviewPage from './components/Reviews/AddReviewPage';
 import { CourseContext } from './context/course-context';
 
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_NO);
+const browserHistory = createBrowserHistory();
+browserHistory.listen((location, action) => {
+	ReactGA.pageview(location.pathname + location.search);
+	console.log(location.pathname + location.search);
+});
+
 const App = () => {
+	useEffect(() => {
+		ReactGA.pageview(window.location.pathname + window.location.search);
+	}, []);
+
 	return (
 		<CourseContext.Provider
 			value={{
@@ -22,7 +35,7 @@ const App = () => {
 				}
 			}}
 		>
-			<BrowserRouter>
+			<Router history={browserHistory}>
 				<HeaderNav />
 				<Switch>
 					<Route path="/" exact>
@@ -68,7 +81,7 @@ const App = () => {
 					</Route>
 					<Redirect to="/" />
 				</Switch>
-			</BrowserRouter>
+			</Router>
 		</CourseContext.Provider>
 	);
 };
