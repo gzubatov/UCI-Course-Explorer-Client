@@ -21,7 +21,8 @@ const courseSelectOptions = [
 	{ value: 'phrmsci', label: 'PHRMSCI' },
 	{ value: 'physics', label: 'PHYSICS' },
 	{ value: 'pol sci', label: 'POL SCI' },
-	{ value: 'stats', label: 'STATS' }
+	{ value: 'stats', label: 'STATS' },
+	{ value: 'uppp', label: 'UPPP' }
 ];
 
 module.exports = courseSelectOptions;
