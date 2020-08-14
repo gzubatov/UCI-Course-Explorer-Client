@@ -15,10 +15,14 @@ const SearchForm = () => {
 	const formHandler = (e) => {
 		e.preventDefault();
 		if (department && course) {
-			history.push(`/search/${department.value}/${course.toUpperCase()}`);
+			history.push(
+				`/search/${encodeURIComponent(
+					department.value
+				)}/${course.toUpperCase()}`
+			);
 		}
 		else if (department) {
-			history.push(`/search/${department.value}`);
+			history.push(`/search/${encodeURIComponent(department.value)}`);
 		}
 		else {
 			setIsTouched(true);
